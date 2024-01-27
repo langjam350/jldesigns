@@ -8,7 +8,8 @@
     "build": "next build",
     "start": "next start -p 4000",
     "lint": "next lint",
-    "serve": "npx serv@latest out"
+    "serve": "npx serv@latest out",
+    "build:css": "tailwindcss build -i src/app/globals.css -o out/globals.css"
   },
   "dependencies": {
     "next": "14.0.4",

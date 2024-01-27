@@ -1,7 +1,9 @@
 // pages/blog/[slug].tsx
 import React from 'react';
-import { BlogPost } from '../blog'
+import { BlogPost } from '.'
 import { getAllBlogPostPaths, getBlogPostBySlug } from './blogData';
+import '../../app/globals.css'
+import Link from "next/link";
 
 // Define the type for the props
 interface BlogPostProps {
@@ -11,8 +13,12 @@ interface BlogPostProps {
 const BlogPost: React.FC<BlogPostProps> = ({ post }) => {
   return (
     <div>
-      <h1>{post.title}</h1>
-      <p>{post.content}</p>
+      <div className="mb-4">
+        <h1 className="text-3xl font-bold text-gray-800">{post.title}</h1>
+        <p className="text-sm text-gray-500">{post.date} | {post.author}</p>
+      </div>
+      <p className="text-base text-gray-600" >{post.content}</p>
+      <Link href="../blog">Back to Blog</Link>
     </div>
   );
 };

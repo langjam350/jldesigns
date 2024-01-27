@@ -2,12 +2,16 @@
 import React from 'react';
 import Link from 'next/link';
 import { getBlogPosts } from './blogData';
+import '../../app/globals.css'
 // Define the type for your blog post
 export interface BlogPost {
   id: string;
   title: string;
   slug: string;
   content: string;
+  date: string;
+  styles: string;
+  author: string;
 }
 
 // Define the type for the props
@@ -23,7 +27,7 @@ const Blog: React.FC<BlogProps> = ({ posts }) => {
         {posts.map((post) => (
           <li key={post.id}>
             <Link href={`/blog/${post.slug}`}>
-              <a>{post.title}</a>
+              {post.title}
             </Link>
           </li>
         ))}
