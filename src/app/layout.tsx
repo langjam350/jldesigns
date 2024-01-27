@@ -3,6 +3,8 @@ import { Inter } from 'next/font/google'
 import './globals.css'
 import Script from 'next/script'
 
+import Navigation from "../components/Navigation/Navbar"
+
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
@@ -33,7 +35,10 @@ export default function RootLayout({
         }}
       />
       </head>
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <Navigation />
+        {children}
+        </body>
     </html>
   )
 }
