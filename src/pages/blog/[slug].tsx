@@ -14,11 +14,12 @@ const BlogPost: React.FC<BlogPostProps> = ({ post }) => {
   return (
     <div>
       <div className="mb-4">
-        <h1 className="text-3xl font-bold text-gray-800">{post.title}</h1>
-        <p className="text-sm text-gray-500">{post.date} | {post.author}</p>
+        <h1 className="text-3xl font-bold text-primary">{post.title}</h1>
+        <p className="text-sm text-secondary">{post.date} | {post.author}</p>
       </div>
-      <p className="text-base text-gray-600" >{post.content}</p>
-      <Link href="../blog">Back to Blog</Link>
+      <p className="text-base text-primary" >{post.content}</p>
+      <br />
+      <Link href="../blog" className="text-accent text-2xl font-bold border-primary w-full">Back to Blog</Link>
     </div>
   );
 };

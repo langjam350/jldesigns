@@ -45,6 +45,25 @@ export const blogPosts = [
         styles: '',
         author: 'James Lang & Chat GPT'
     },
+    {
+        id: '3',
+        title: 'Thoughts On The 4 Generation Rule From The Muqaddimah',
+        slug: '20240220-1',
+        content: `The book the Muqaddimah discusses the 4 generation theory.
+                The theory reads: "Prestige lasts at best four generations in one lineage". Though written in the 1400s, I think this book still has many themes worth exploring, and this is one I found particularly interesting. I intend to research a few case studies and see if 1. There is truth to the idea that generational wealth or success does not persist and 2. Examine a couple case studies of families to succeed past 4 generations.`,
+        date: '2024-02-20',
+        styles: '',
+        author: 'James Lang'
+    },
+    {
+        id: '4',
+        title: 'Adding a create post screen',
+        slug: '20240220-2',
+        content: 'I should develop a screen to create a blog post and add its information to the list of exisiting posts',
+        date: '2024-02-20',
+        styles: '',
+        author: 'James Lang'
+    },
 ];
   
 // Function to get all blog posts
@@ -60,13 +79,6 @@ return blogPosts.map((post) => ({ params: { slug: post.slug } }));
 
 // Function to get a specific blog post by slug
 export const getBlogPostBySlug = async (slug: string) => {
-// In a real-world scenario, you might filter or fetch data based on the provided slug
-return blogPosts.find((post) => post.slug === slug);
+    // In a real-world scenario, you might filter or fetch data based on the provided slug
+    return blogPosts.find((post) => post.slug === slug);
 };
-
-const BlogData = () => {
-    // Your component logic here
-    return <div>Blog Data Component</div>;
-  };
-
-export default BlogData;

@@ -3,6 +3,7 @@ import React from 'react';
 import Link from 'next/link';
 import { getBlogPosts } from './blogData';
 import '../../app/globals.css'
+import Navigation from "../../components/Navigation"
 // Define the type for your blog post
 export interface BlogPost {
   id: string;
@@ -22,17 +23,21 @@ interface BlogProps {
 const Blog: React.FC<BlogProps> = ({ posts }) => {
   return (
     <div>
-      <h1>Blog</h1>
-      <ul>
-        {posts.map((post) => (
-          <li key={post.id}>
-            <Link href={`/blog/${post.slug}`}>
-              {post.title}
-            </Link>
-          </li>
-        ))}
-      </ul>
+      <Navigation />
+      <div>
+        <h1 className="text-3xl font-bold underline">Blog</h1>
+        <ul>
+          {posts.map((post) => (
+            <li key={post.id}>
+              <Link href={`/blog/${post.slug}`}>
+                {post.title} | {post.date} 
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
+    
   );
 };
 
