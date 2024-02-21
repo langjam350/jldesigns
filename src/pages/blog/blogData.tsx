@@ -82,3 +82,9 @@ export const getBlogPostBySlug = async (slug: string) => {
     // In a real-world scenario, you might filter or fetch data based on the provided slug
     return blogPosts.find((post) => post.slug === slug);
 };
+
+const BlogData = () => {
+
+}
+
+export default BlogData;
