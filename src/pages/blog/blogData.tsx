@@ -2,43 +2,50 @@ import { BlogPost } from './blogPost'
 import { db } from '../../../lib/firebase'
 import { addDoc, collection, getDocs, QueryDocumentSnapshot } from 'firebase/firestore';
 
-// Function to get all blog posts from the Firestore collection
-export async function getAllBlogPosts(): Promise<BlogPost[]> {
-    try {
-        var blogPosts: BlogPost[] = [];
-        const blogPostsCollection = collection(db, 'blogPosts');
-        const querySnapshot = await getDocs(blogPostsCollection);  
-        querySnapshot.forEach((doc: QueryDocumentSnapshot) => {
-            const data = doc.data();
-            const blogPost: BlogPost = {
-                id: doc.id,
-                title: data.title,
-                content: data.content,
-                slug: data.slug,
-                date: data.date,
-                styles: data.styles,
-                author: data.author
-            };
-            blogPosts.push(blogPost);
-        });
-        return blogPosts;
-    } catch (error) {
-        console.error('Error getting blog posts:', error);
-        throw error;
+export class BlogPostService {
+    // Function to get all blog posts from the Firestore collection
+    async getAllBlogPosts(): Promise<BlogPost[]> {
+        try {
+            var blogPosts: BlogPost[] = [];
+            const blogPostsCollection = collection(db, 'blogPosts');
+            const querySnapshot = await getDocs(blogPostsCollection);  
+            querySnapshot.forEach((doc: QueryDocumentSnapshot) => {
+                const data = doc.data();
+                const blogPost: BlogPost = {
+                    id: doc.id,
+                    title: data.title,
+                    content: data.content,
+                    slug: data.slug,
+                    date: data.date,
+                    styles: data.styles,
+                    author: data.author
+                };
+                blogPosts.push(blogPost);
+            });
+            return blogPosts;
+        } catch (error) {
+            console.error('Error getting blog posts:', error);
+            throw error;
+        }
     }
-}  
-
-// Function to add a new blog post to the Firestore collection
-export async function addBlogPost(blogPost: BlogPost): Promise<void> {
-    try {
-        const blogPostsCollection = collection(db, 'blogPosts');
-        await addDoc(blogPostsCollection, blogPost);
-        console.log('Blog post added successfully');
-    } catch (error) {
-        console.error('Error adding blog post:', error);
-        throw error;
+    
+    // Function to add a new blog post to the Firestore collection
+    async addBlogPost(blogPost: BlogPost): Promise<void> {
+        try {
+            const blogPostsCollection = collection(db, 'blogPosts');
+            await addDoc(blogPostsCollection, blogPost);
+            console.log('Blog post added successfully');
+        } catch (error) {
+            console.error('Error adding blog post:', error);
+            throw error;
+        }
     }
 }
+
+
+
+
+
 export const blogPostsMeta = [
     {
         id: '1',

@@ -1,6 +1,6 @@
 // pages/blog/[slug].tsx
 import React from 'react';
-import { BlogPost } from '.'
+import { BlogPost } from '.blogPost'
 import { getAllBlogPostPaths, getBlogPostBySlug } from './blogData';
 import '../../app/globals.css'
 import Link from "next/link";
