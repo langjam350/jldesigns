@@ -1,5 +1,45 @@
-// Mock data for demonstration purposes
-export const blogPosts = [
+import { BlogPost } from './blogPost'
+import { db } from '../../../lib/firebase'
+import { addDoc, collection, getDocs, QueryDocumentSnapshot } from 'firebase/firestore';
+
+// Function to get all blog posts from the Firestore collection
+export async function getAllBlogPosts(): Promise<BlogPost[]> {
+    try {
+        var blogPosts: BlogPost[] = [];
+        const blogPostsCollection = collection(db, 'blogPosts');
+        const querySnapshot = await getDocs(blogPostsCollection);  
+        querySnapshot.forEach((doc: QueryDocumentSnapshot) => {
+            const data = doc.data();
+            const blogPost: BlogPost = {
+                id: doc.id,
+                title: data.title,
+                content: data.content,
+                slug: data.slug,
+                date: data.date,
+                styles: data.styles,
+                author: data.author
+            };
+            blogPosts.push(blogPost);
+        });
+        return blogPosts;
+    } catch (error) {
+        console.error('Error getting blog posts:', error);
+        throw error;
+    }
+}  
+
+// Function to add a new blog post to the Firestore collection
+export async function addBlogPost(blogPost: BlogPost): Promise<void> {
+    try {
+        const blogPostsCollection = collection(db, 'blogPosts');
+        await addDoc(blogPostsCollection, blogPost);
+        console.log('Blog post added successfully');
+    } catch (error) {
+        console.error('Error adding blog post:', error);
+        throw error;
+    }
+}
+export const blogPostsMeta = [
     {
         id: '1',
         title: 'Data Improvement',
@@ -62,29 +102,6 @@ export const blogPosts = [
         content: 'I should develop a screen to create a blog post and add its information to the list of exisiting posts',
         date: '2024-02-20',
         styles: '',
-        author: 'James Lang'
+        author: 'James Lang',
     },
 ];
-  
-// Function to get all blog posts
-export const getBlogPosts = async () => {
-// In a real-world scenario, you might fetch data from an API or database here
-return blogPosts;
-};
-
-// Function to get paths for all blog posts
-export const getAllBlogPostPaths = async () => {
-return blogPosts.map((post) => ({ params: { slug: post.slug } }));
-};
-
-// Function to get a specific blog post by slug
-export const getBlogPostBySlug = async (slug: string) => {
-    // In a real-world scenario, you might filter or fetch data based on the provided slug
-    return blogPosts.find((post) => post.slug === slug);
-};
-
-const BlogData = () => {
-
-}
-
-export default BlogData;

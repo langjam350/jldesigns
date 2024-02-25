@@ -1,24 +1,11 @@
 // pages/blog.tsx
 import React from 'react';
 import Link from 'next/link';
-import { getBlogPosts } from './blogData';
+import { getAllBlogPosts } from './blogData';
 import '../../app/globals.css'
 import Navigation from "../../components/Navigation"
-// Define the type for your blog post
-export interface BlogPost {
-  id: string;
-  title: string;
-  slug: string;
-  content: string;
-  date: string;
-  styles: string;
-  author: string;
-}
+import { BlogPost, BlogProps } from "./blogPost"
 
-// Define the type for the props
-interface BlogProps {
-  posts: BlogPost[];
-}
 
 const Blog: React.FC<BlogProps> = ({ posts }) => {
   return (
@@ -30,8 +17,12 @@ const Blog: React.FC<BlogProps> = ({ posts }) => {
           {posts.map((post) => (
             <li key={post.id}>
               <Link href={`/blog/${post.slug}`}>
-                {post.title} | {post.date} 
+                {post.title} | <span className="text-accent">{post.date}</span>
               </Link>
+              <p className="text-secondary text-xs">
+                {post.content.substring(0, 100)}...
+              </p>
+              <br/>
             </li>
           ))}
         </ul>
@@ -44,7 +35,7 @@ const Blog: React.FC<BlogProps> = ({ posts }) => {
 export async function getStaticProps() {
   // Fetch your blog posts from an API or a file system
   // For example, assuming you have a function getBlogPosts() that fetches posts
-  const posts: BlogPost[] = await getBlogPosts();
+  const posts: BlogPost[] = await getAllBlogPosts();
 
   return {
     props: {
