@@ -28,7 +28,51 @@ export class BlogPostService {
             throw error;
         }
     }
+
+    async getBlogPostBySlug(slug: string): Promise<BlogPost> {
+        var blogPosts = await this.getAllBlogPosts()
+        blogPosts.forEach(blogPost => {
+            if(blogPost.slug = slug) {
+                return blogPost
+            }
+        })
+
+        return {
+            id: '-1',
+            title: "Post Not Found",
+            content: "The requested blog post was not found.",
+            slug: "",
+            author: "",
+            styles: "",
+            date: ""
+        };
+    }
     
+    async getAllStaticPaths(): Promise<string[]> {
+        try {
+            var staticPaths: string[] = [];
+            const blogPostsCollection = collection(db, 'blogPosts');
+            const querySnapshot = await getDocs(blogPostsCollection);  
+            querySnapshot.forEach((doc: QueryDocumentSnapshot) => {
+                const data = doc.data();
+                const blogPost: BlogPost = {
+                    id: doc.id,
+                    title: data.title,
+                    content: data.content,
+                    slug: data.slug,
+                    date: data.date,
+                    styles: data.styles,
+                    author: data.author
+                };
+                staticPaths.push(blogPost.slug + '-' + blogPost.id);
+            });
+            return staticPaths;
+        } catch (error) {
+            console.error('Error getting blog posts:', error);
+            throw error;
+        }
+    }
+
     // Function to add a new blog post to the Firestore collection
     async addBlogPost(blogPost: BlogPost): Promise<void> {
         try {

@@ -1,9 +1,9 @@
 // pages/blog/[slug].tsx
 import React from 'react';
-import { BlogPost } from '.blogPost'
-import { getAllBlogPostPaths, getBlogPostBySlug } from './blogData';
+import { BlogPost } from './blogPost'
 import '../../app/globals.css'
 import Link from "next/link";
+import { BlogPostService } from './blogPostService'
 
 // Define the type for the props
 interface BlogPostProps {
@@ -11,6 +11,7 @@ interface BlogPostProps {
 }
 
 const BlogPost: React.FC<BlogPostProps> = ({ post }) => {
+  
   return (
     <div>
       <div className="mb-4">
@@ -25,8 +26,9 @@ const BlogPost: React.FC<BlogPostProps> = ({ post }) => {
 };
 
 export async function getStaticPaths() {
+  var blogPostService = new BlogPostService()
   // Fetch the paths for all blog posts
-  const paths = await getAllBlogPostPaths();
+  const paths = await blogPostService.getAllStaticPaths();
 
   return {
     paths,
@@ -35,8 +37,10 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }: { params: { slug: string } }) {
+  var blogPostService = new BlogPostService()
+
   // Fetch a specific blog post based on the slug
-  const post: BlogPost | undefined = await getBlogPostBySlug(params.slug);
+  const post: BlogPost | undefined = await blogPostService.getBlogPostBySlug(params.slug);
 
   return {
     props: {

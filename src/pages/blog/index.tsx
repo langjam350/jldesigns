@@ -1,7 +1,7 @@
 // pages/blog.tsx
 import React from 'react';
 import Link from 'next/link';
-import { BlogPostService } from './blogData';
+import { BlogPostService } from './blogPostService';
 import '../../app/globals.css'
 import Navigation from "../../components/Navigation"
 import { BlogPost, BlogProps } from "./blogPost"
@@ -13,6 +13,7 @@ const Blog: React.FC<BlogProps> = ({ posts }) => {
       <Navigation />
       <div>
         <h1 className="text-3xl font-bold underline">Blog</h1>
+        <p>Add Blog Post</p>
         <ul>
           {posts.map((post) => (
             <li key={post.id}>
