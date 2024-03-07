@@ -21,6 +21,14 @@
         "destination": "blog.html"
       },
       {
+        "source": "signin",
+        "destination": "signin.html"
+      },
+      {
+        "source": "signup",
+        "destination": "signup.html"
+      },
+      {
         "source": "**",
         "destination": "/index.html"
       }
