@@ -13,7 +13,6 @@ const Blog: React.FC<BlogProps> = ({ posts }) => {
       <Navigation />
       <div>
         <h1 className="text-3xl font-bold underline">Blog</h1>
-        <p>Add Blog Post</p>
         <ul>
           {posts.map((post) => (
             <li key={post.id}>

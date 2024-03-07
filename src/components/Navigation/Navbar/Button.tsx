@@ -1,6 +1,8 @@
+import Link from 'next/link'
+
 const Button = () => {
     return (
-      <button className="h-12 rounded-lg bg-white font-bold px-5">Sign In</button>
+      <Link className="rounded-lg flex items-center justify-center h-12 bg-white font-bold px-5 " href="/signin">Sign In</Link>
     );
   };
   export default Button;
