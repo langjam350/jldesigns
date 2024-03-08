@@ -6,7 +6,6 @@ import '../../app/globals.css'
 import Navigation from "../../components/Navigation"
 import IBlogPost, { BlogProps } from "../../models/IBlogPost"
 
-
 const Blog: React.FC<BlogProps> = ({ posts }) => {
   return (
     <div>
@@ -25,6 +24,9 @@ const Blog: React.FC<BlogProps> = ({ posts }) => {
               <br/>
             </li>
           ))}
+          {(process.env.USER_EMAIL != '' && process.env.USER_EMAIL) && (
+            <li><Link href={'blog/addBlogPost'}></Link></li>
+          )}
         </ul>
       </div>
     </div>

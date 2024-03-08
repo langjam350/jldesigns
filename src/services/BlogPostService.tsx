@@ -78,14 +78,16 @@ export default class BlogPostService {
     }
 
     // Function to add a new blog post to the Firestore collection
-    async addBlogPost(blogPost: IBlogPost): Promise<void> {
+    async addBlogPost(blogPost: IBlogPost): Promise<Boolean> {
         try {
             const blogPostsCollection = collection(db, 'blogPosts');
             await addDoc(blogPostsCollection, blogPost);
             console.log('Blog post added successfully');
+            return true
         } catch (error) {
             console.error('Error adding blog post:', error);
             throw error;
+            return false
         }
     }
 }

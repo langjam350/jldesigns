@@ -59,9 +59,12 @@ class LoginService {
             console.log("get user info")
             UserInfoList.forEach(async user => {
                 if(user.email = this.email) {
-                    if (await bcrypt.compare(user.password, password)) {
+                    var bool = await bcrypt.compare(user.password, password)
+                    console.log('Email Found.' + bool);
+                    if (bool) {
+                        console.log('Password Found.');
                         this.loggedIn = true
-                        //USER_EMAIL = this.email
+                        process.env.USER_EMAIL = this.email
                     }
                 } 
             })

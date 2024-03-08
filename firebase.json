@@ -33,6 +33,10 @@
         "destination": "blog/[slug]"
       },
       {
+        "source": "blog/addBlogPost",
+        "destination": "addBlogPost"
+      },
+      {
         "source": "**",
         "destination": "/index"
       }

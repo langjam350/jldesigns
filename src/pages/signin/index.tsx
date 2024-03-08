@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import '../../app/globals.css'
-import LoginService from '../../services/loginService'
+import LoginService from '../../services/LoginService'
 import { useRouter } from 'next/router';
 
 const SignInPage = () => {
@@ -21,7 +21,7 @@ const SignInPage = () => {
         loggedIn = await loginService.handleSignIn(email, password);
         if(loggedIn) {
             console.log("routing to main page")
-            //router.push('/')
+            router.push('/')
         }
     };
 
@@ -44,7 +44,7 @@ const SignInPage = () => {
                         </Link>
                     </div>
                     <div className="mx-auto max-w-screen-md w-80 text-sm">
-                        <Link href="/sign-up">
+                        <Link href="/signup">
                             Create An Account
                         </Link>
                     </div>
