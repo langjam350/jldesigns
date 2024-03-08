@@ -1,5 +1,5 @@
 // Define the type for your blog post
-export interface UserInfo {
+export default interface IUserInfo {
     id: number;
     email: string;
     password: string;
@@ -9,5 +9,5 @@ export interface UserInfo {
   
   // Define the type for the props
 export interface UserProps {
-    posts: UserInfo[];
+    posts: IUserInfo[];
 }

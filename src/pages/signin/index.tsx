@@ -1,9 +1,8 @@
 // pages/signin.js
-
 import React, { useState } from 'react';
 import Link from 'next/link';
 import '../../app/globals.css'
-import LoginService from './loginService'
+import LoginService from '../../services/loginService'
 import { useRouter } from 'next/router';
 
 const SignInPage = () => {

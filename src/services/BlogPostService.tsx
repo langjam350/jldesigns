@@ -1,37 +1,36 @@
-import { BlogPost } from './blogPost'
-import { db } from '../../../lib/firebase'
+import IBlogPost from '../models/IBlogPost'
+import { db } from '../../lib/firebase'
 import { addDoc, collection, getDocs, QueryDocumentSnapshot } from 'firebase/firestore';
-
-export class BlogPostService {
+export default class BlogPostService {
     // Function to get all blog posts from the Firestore collection
-    async getAllBlogPosts(): Promise<BlogPost[]> {
-        try {
-            var blogPosts: BlogPost[] = [];
-            const blogPostsCollection = collection(db, 'blogPosts');
-            const querySnapshot = await getDocs(blogPostsCollection);  
-            querySnapshot.forEach((doc: QueryDocumentSnapshot) => {
-                const data = doc.data();
-                const blogPost: BlogPost = {
-                    id: doc.id,
-                    title: data.title,
-                    content: data.content,
-                    slug: data.slug,
-                    date: data.date,
-                    styles: data.styles,
-                    author: data.author
-                };
-                blogPosts.push(blogPost);
-            });
-            return blogPosts;
+    async getAllBlogPosts(): Promise<IBlogPost[]> {
+    try {
+        var blogPosts: IBlogPost[] = [];
+        const blogPostsCollection = collection(db, 'blogPosts');
+        const querySnapshot = await getDocs(blogPostsCollection);  
+        querySnapshot.forEach((doc: QueryDocumentSnapshot) => {
+            const data = doc.data();
+            const blogPost: IBlogPost = {
+                id: doc.id,
+                title: data.title,
+                content: data.content,
+                slug: data.slug,
+                date: data.date,
+                styles: data.styles,
+                author: data.author
+            };
+            blogPosts.push(blogPost);
+        });
+        return blogPosts;
         } catch (error) {
             console.error('Error getting blog posts:', error);
             throw error;
         }
     }
 
-    async getBlogPostBySlug(slug: string): Promise<BlogPost> {
+    async getBlogPostBySlug(slug: string): Promise<IBlogPost> {
         var blogPosts = await this.getAllBlogPosts()
-        blogPosts.forEach(blogPost => {
+        blogPosts.forEach((blogPost: IBlogPost)  => {
             if(blogPost.slug = slug) {
                 return blogPost
             }
@@ -47,7 +46,7 @@ export class BlogPostService {
             date: ""
         };
     }
-    
+
     async getAllStaticPaths(): Promise<string[]> {
         try {
             var staticPaths: string[] = [];
@@ -55,7 +54,7 @@ export class BlogPostService {
             const querySnapshot = await getDocs(blogPostsCollection);  
             querySnapshot.forEach((doc: QueryDocumentSnapshot) => {
                 const data = doc.data();
-                const blogPost: BlogPost = {
+                const blogPost: IBlogPost = {
                     id: doc.id,
                     title: data.title,
                     content: data.content,
@@ -74,7 +73,7 @@ export class BlogPostService {
     }
 
     // Function to add a new blog post to the Firestore collection
-    async addBlogPost(blogPost: BlogPost): Promise<void> {
+    async addBlogPost(blogPost: IBlogPost): Promise<void> {
         try {
             const blogPostsCollection = collection(db, 'blogPosts');
             await addDoc(blogPostsCollection, blogPost);
@@ -85,11 +84,6 @@ export class BlogPostService {
         }
     }
 }
-
-
-
-
-
 export const blogPostsMeta = [
     {
         id: '1',

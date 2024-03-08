@@ -10,27 +10,31 @@
     "rewrites": [
       {
         "source": "websites",
-        "destination": "websites.html"
+        "destination": "websites"
       },
       {
         "source": "fitness",
-        "destination": "fitness.html"
+        "destination": "fitness"
       },
       {
         "source": "blog",
-        "destination": "blog.html"
+        "destination": "blog"
       },
       {
         "source": "signin",
-        "destination": "signin.html"
+        "destination": "signin"
       },
       {
         "source": "signup",
-        "destination": "signup.html"
+        "destination": "signup"
+      },
+      {
+        "source": "blog/**",
+        "destination": "blog/[slug]"
       },
       {
         "source": "**",
-        "destination": "/index.html"
+        "destination": "/index"
       }
     ]
   }

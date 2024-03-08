@@ -1,8 +1,8 @@
-import { db, auth } from '../../../lib/firebase'
+import { db, auth } from '../../lib/firebase'
 import { addDoc, collection, getDocs, QueryDocumentSnapshot } from 'firebase/firestore';
-import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
+//import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
 import bcrypt from 'bcryptjs'; // Import bcryptjs for password hashing
-import { UserInfo } from './UserInfo';
+import IUserInfo from '../models/IUserInfo';
 
 class LoginService {
     email = '';
@@ -38,16 +38,16 @@ class LoginService {
             // Sign in the user with email and password
             //const userCredential = await signInWithEmailAndPassword(auth, this.email, this.password);
             //if (!userCredential) {
-              //  return false;
+              //  return false;a
             //}
             // Now, access the "userInfo" collection in Firestore
-            var UserInfoList: UserInfo[] = [];
+            var UserInfoList: IUserInfo[] = [];
             const userInfoCollection = collection(db, 'userInfo');
             console.log("getting collection")
             var querySnapshot = await getDocs(userInfoCollection);  
             querySnapshot.forEach((doc: QueryDocumentSnapshot) => {
                 const data = doc.data();
-                const userInfo: UserInfo = {
+                const userInfo: IUserInfo = {
                     id: data.id,
                     email: data.email,
                     password: data.password,
@@ -97,7 +97,7 @@ class LoginService {
 
             const hashedPassword = await bcrypt.hash(password, 10);
 
-            const userInfo: UserInfo = {
+            const userInfo: IUserInfo = {
                 id: Math.floor(Math.random() * 10000) + 1,
                 email: email,
                 password: hashedPassword, 

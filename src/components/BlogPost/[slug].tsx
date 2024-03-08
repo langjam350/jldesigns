@@ -1,13 +1,13 @@
 // pages/blog/[slug].tsx
 import React from 'react';
-import { BlogPost } from './blogPost'
+import IBlogPost from '../../models/IBlogPost'
 import '../../app/globals.css'
 import Link from "next/link";
-import { BlogPostService } from './blogPostService'
+import BlogPostService from '../../services/BlogPostService'
 
 // Define the type for the props
 interface BlogPostProps {
-  post: BlogPost;
+  post: IBlogPost;
 }
 
 const BlogPost: React.FC<BlogPostProps> = ({ post }) => {
@@ -27,12 +27,18 @@ const BlogPost: React.FC<BlogPostProps> = ({ post }) => {
 
 export async function getStaticPaths() {
   var blogPostService = new BlogPostService()
-  // Fetch the paths for all blog posts
-  const paths = await blogPostService.getAllStaticPaths();
 
+  const apiDataPaths = await blogPostService.getAllStaticPaths();
+  // Empty arr to build new paths
+  const newPaths = [];
+  // Add params to every slug obj returned from api
+  for (let slug of apiDataPaths) {
+    newPaths.push({ params: { slug } });
+  }
+  // Return paths to render components
   return {
-    paths,
-    fallback: false,
+    paths: newPaths,
+    fallback: true
   };
 }
 
@@ -40,7 +46,13 @@ export async function getStaticProps({ params }: { params: { slug: string } }) {
   var blogPostService = new BlogPostService()
 
   // Fetch a specific blog post based on the slug
-  const post: BlogPost | undefined = await blogPostService.getBlogPostBySlug(params.slug);
+  const post: IBlogPost | undefined = await blogPostService.getBlogPostBySlug(params.slug);
+
+  if (!post) {
+    return {
+      notFound: true,
+    }
+  }
 
   return {
     props: {
