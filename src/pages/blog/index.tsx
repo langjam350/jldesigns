@@ -1,10 +1,10 @@
 // pages/blog.tsx
 import React from 'react';
 import Link from 'next/link';
-import { BlogPostService } from './blogPostService';
+import BlogPostService from '../../services/BlogPostService';
 import '../../app/globals.css'
 import Navigation from "../../components/Navigation"
-import { BlogPost, BlogProps } from "./blogPost"
+import IBlogPost, { BlogProps } from "../../models/IBlogPost"
 
 
 const Blog: React.FC<BlogProps> = ({ posts }) => {
@@ -33,8 +33,8 @@ const Blog: React.FC<BlogProps> = ({ posts }) => {
 };
 
 export async function getStaticProps() {
-  const blogPostService: BlogPostService = new BlogPostService() 
-  const posts: BlogPost[] = await blogPostService.getAllBlogPosts();
+  var blogPostService = new BlogPostService()
+  const posts: IBlogPost[] = await blogPostService.getAllBlogPosts();
 
   return {
     props: {

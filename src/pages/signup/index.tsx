@@ -1,7 +1,7 @@
 // SignUpPage.tsx
 import { useState } from 'react';
 import '../../app/globals.css'
-import LoginService from '../signin/loginService'
+import LoginService from '../../services/loginService'
 import { useRouter } from 'next/router';
 
 const SignUpPage = () => {

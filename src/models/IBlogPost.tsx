@@ -1,5 +1,5 @@
 // Define the type for your blog post
-export interface BlogPost {
+export default interface IBlogPost {
     id: string;
     title: string;
     slug: string;
@@ -11,5 +11,5 @@ export interface BlogPost {
   
   // Define the type for the props
 export interface BlogProps {
-    posts: BlogPost[];
+    posts: IBlogPost[];
 }
