@@ -29,7 +29,7 @@
         "destination": "signup"
       },
       {
-        "source": "blog/**",
+        "source": "blog/:slug",
         "destination": "blog/[slug]"
       },
       {
