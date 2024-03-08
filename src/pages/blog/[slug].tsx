@@ -11,7 +11,6 @@ interface BlogPostProps {
 }
 
 const BlogPost: React.FC<BlogPostProps> = ({ post }) => {
-  
   return (
     <div>
       <div className="mb-4">
@@ -38,7 +37,7 @@ export async function getStaticPaths() {
   // Return paths to render components
   return {
     paths: newPaths,
-    fallback: true
+    fallback: false
   };
 }
 

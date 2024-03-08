@@ -30,11 +30,16 @@ export default class BlogPostService {
 
     async getBlogPostBySlug(slug: string): Promise<IBlogPost> {
         var blogPosts = await this.getAllBlogPosts()
+        var returnBlogPost;
         blogPosts.forEach((blogPost: IBlogPost)  => {
-            if(blogPost.slug = slug) {
-                return blogPost
+            if(blogPost.slug == slug) {
+                 returnBlogPost = blogPost
             }
         })
+
+        if (returnBlogPost){
+            return returnBlogPost;
+        }
 
         return {
             id: '-1',
@@ -63,7 +68,7 @@ export default class BlogPostService {
                     styles: data.styles,
                     author: data.author
                 };
-                staticPaths.push(blogPost.slug + '-' + blogPost.id);
+                staticPaths.push(blogPost.slug);
             });
             return staticPaths;
         } catch (error) {
