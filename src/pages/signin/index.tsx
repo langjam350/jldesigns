@@ -19,14 +19,17 @@ const SignInPage = () => {
     var loggedIn;
 
     const handleSignIn = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        loginService.setEmail(formData.email);
-        loginService.setPassword(formData.password);
-        console.log("signing in user " + formData.email)
-        var loggedIn = await loginService.handleSignIn(formData.email, formData.password);
-        if (loggedIn) {
-            router.push('/blog')
+        if (e.type =='submit') {
+            e.preventDefault();
+            loginService.setEmail(formData.email);
+            loginService.setPassword(formData.password);
+            console.log("signing in user " + formData.email)
+            var loggedIn = await loginService.handleSignIn(formData.email, formData.password);
+            if (loggedIn) {
+                router.push('/blog')
+            }
         }
+        
     };
 
     const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {

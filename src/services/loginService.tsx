@@ -60,7 +60,7 @@ class LoginService {
             console.log("get user info")
             var loginResult = false;
             UserInfoList.forEach(async user => {
-                if(user.email = this.email) {
+                if(user.email == this.email) {
                     await bcrypt.compare(password, user.password, function(err, result) {
                         console.log(password);
                         console.log(user.password);
