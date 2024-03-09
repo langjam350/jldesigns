@@ -34,6 +34,7 @@ export default function RootLayout({
         `,
         }}
       />
+      <title>JLang Designs for 2024</title>
       </head>
       <body className={inter.className}>
         <Navigation />

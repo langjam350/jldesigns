@@ -19,7 +19,10 @@
 }
 
 .nav-item:hover {
-    background-color: #ffffff;
+    background-color: #0B132B; /* Remove hover background color */
+    color: #ffffff;
+    border-radius: 5px;
+    padding: 5px;
 }
 
 .body-1 {
@@ -32,4 +35,63 @@
     font-weight: 700;
     text-decoration-line: underline;
     font-size: 24pt;
+}
+
+/* Mobile-first Responsive Design */
+/* Apply mobile-friendly styles by default */
+
+/* For smartphones (portrait and landscape) */
+@media only screen and (max-width: 600px) {
+    /* Add mobile-specific styles here */
+    /* For example: */
+    body {
+      font-size: 16px; /* Adjust font size for better readability on smaller screens */
+    }
+
+    .nav-list {
+        flex-direction: column; /* Stack nav items vertically */
+    }
+
+    .navbar {
+        height: inherit;
+    }
+      
+    /* Reset styles for nav item */
+    .nav-item {
+        margin-right: 0; /* Remove right margin */
+        margin-bottom: 1rem; /* Add bottom margin for spacing between items */
+        line-height: inherit; /* Reset line height */
+        width: auto; /* Allow nav items to expand to fit content */
+    }
+    
+    /* Hover styles for nav item */
+    .nav-item:hover {
+        background-color: #0B132B; /* Remove hover background color */
+        color: #ffffff;
+        border-radius: 5px;
+        padding: 5px;
+    }
+      
+    /* Body text styles */
+    .body-1 {
+        font-size: 16px; /* Decrease font size for smaller screens */
+    }
+      
+    /* Header text styles */
+    .body-header {
+        font-size: 20px; /* Decrease font size for smaller screens */
+    }
+  
+}
+  
+  /* For tablets and larger devices */
+@media only screen and (min-width: 601px) {
+/* Add tablet-specific or desktop-specific styles here */
+/* For example: */
+.container {
+    max-width: 768px; /* Adjust container width for better readability on larger screens */
+    margin: 0 auto; /* Center the container horizontally */
+}
+
+/* Adjust layout or styling as needed for larger screens */
 }

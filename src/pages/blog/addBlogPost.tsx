@@ -13,6 +13,7 @@ const AddBlogPost: React.FC = () => {
     const [date, setDate] = useState('');
     const [styles, setStyles] = useState('');
     const [author, setAuthor] = useState('');
+    const [usedAI, setUsedAI] = useState(false)
 
     // Get today's date
     const today = new Date();
@@ -34,6 +35,9 @@ const AddBlogPost: React.FC = () => {
         setId(idIncremented)
         if (process.env.NEXT_PUBLIC_USER_EMAIL) {
           setAuthor(process.env.NEXT_PUBLIC_USER_EMAIL)
+          if (usedAI) {
+            setAuthor(process.env.NEXT_PUBLIC_USER_EMAIL + "Chat GPT")
+          }
         }
       }
     )
@@ -43,10 +47,6 @@ const AddBlogPost: React.FC = () => {
         throw error;
       }
     );
-
-    
-
-    
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
@@ -143,12 +143,15 @@ const AddBlogPost: React.FC = () => {
             </div>
             <div>
               <label className="block mb-2">Author:</label>
+
+              <label className="block mb-2">
+                Did the article use AI to generate its contents?
+              </label>
               <input
-                type="text"
-                value={author}
-                onChange={(e) => setAuthor(e.target.value)}
-                required
-                className="w-full border border-gray-300 rounded px-3 py-2"
+                type="checkbox"
+                checked={usedAI}
+                onChange={(e) => setUsedAI(e.target.checked)}
+                className="border border-gray-300 rounded px-3 py-2"
               />
             </div>
             <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">

@@ -3,8 +3,8 @@ import './globals.css'
 export default function Home() {
   return (
     <main className="bg-primary min-h-screen flex items-center justify-center">
-      <div className="max-w-4xl px-8 py-12 rounded-lg shadow-lg bg-white text-gray-800">
-        <h1 className="text-3xl font-bold mb-6 text-primary">Designing for 2024</h1>
+      <div className="max-w-4xl px-8 py-12 rounded-lg shadow-lg bg-white text-secondary">
+        <h1 className="text-3xl font-bold mb-6 text-secondary">Designing for 2024</h1>
         <p className="text-lg mb-8">Designing websites, fitness / health resources, and other recommendations for the future.</p>
         <p className="text-lg mb-8">New resources: Budget Template, Grade Tracking Template</p>
         <p className="text-lg">As we design for 2024, our mission is to empower individuals to shape their lives for the better. We believe in providing cutting-edge technological solutions and innovative resources to assist our clients in achieving their goals. Whether it&apos;s through personalized website design, comprehensive fitness and health resources, or other forward-thinking recommendations, we&apos;re dedicated to helping you unlock your full potential. With a focus on creativity, efficiency, and excellence, we&apos;re here to support you on your journey towards a brighter future.</p>

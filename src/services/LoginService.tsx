@@ -70,7 +70,7 @@ class LoginService {
                             return Promise.resolve(false);
                         }
                         if (result) {
-                            process.env.NEXT_PUBLIC_USER_EMAIL = user.email;
+                            //process.env.NEXT_PUBLIC_USER_EMAIL = user.email;
                             console.log("User " + email + " is logged in")
                             loginResult = true
                             console.log('Passwords match'); // The plaintext password matches the hashed password
