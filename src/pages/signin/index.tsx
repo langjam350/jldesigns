@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import '../../app/globals.css'
-import LoginService from '@/services/LoginService'
+import LoginService from '../../services/LoginService'
 import { useRouter } from 'next/router';
 
 const SignInPage = () => {
