@@ -51,7 +51,6 @@ const AddBlogPost: React.FC = () => {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       try {
-          
           const newBlogPost: IBlogPost = {
               id,
               title,
