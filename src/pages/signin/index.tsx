@@ -6,24 +6,36 @@ import LoginService from '../../services/LoginService'
 import { useRouter } from 'next/router';
 
 const SignInPage = () => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [formData, setFormData] = useState({
+        // Initialize form data state
+        // For example:
+        email: '',
+        password: ''
+      });
 
     const loginService = new LoginService(); // Instantiate the LoginService
     const router = useRouter();
 
     var loggedIn;
 
-    const handleSignIn = async () => {
-        loginService.setEmail(email);
-        loginService.setPassword(password);
-        console.log("signing in user " + email)
-        loggedIn = await loginService.handleSignIn(email, password);
-        if(loggedIn) {
-            console.log("routing to main page")
-            router.push('/')
+    const handleSignIn = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        loginService.setEmail(formData.email);
+        loginService.setPassword(formData.password);
+        console.log("signing in user " + formData.email)
+        var loggedIn = await loginService.handleSignIn(formData.email, formData.password);
+        if (loggedIn) {
+            router.push('/blog')
         }
     };
+
+    const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setFormData({
+          ...formData,
+          [name]: value
+        });
+      };
 
     return (
         <div className="min-h-screen flex items-center justify-center sm:px-6 lg:px-8 text-primary ">
@@ -34,8 +46,8 @@ const SignInPage = () => {
                 <form className="mt-8 space-y-6 justify-center items-center" onSubmit={handleSignIn}>
                     <input type="hidden" name="remember" value="true" />
                     <div className="rounded-md mx-auto">
-                        <input id="email" name="email" type="text" autoComplete="email" required className="mx-auto max-w-screen-md w-80 rounded-t-md px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Username" value={email} onChange={(e) => setEmail(e.target.value)} />
-                        <input id="password" name="password" type="password" autoComplete="current-password" required className="mx-auto max-w-screen-md w-80 px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                        <input id="email" name="email" type="text" autoComplete="email" required className="mx-auto max-w-screen-md w-80 rounded-t-md px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Username" value={formData.email} onChange={handleChange} />
+                        <input id="password" name="password" type="password" autoComplete="current-password" required className="mx-auto max-w-screen-md w-80 px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Password" value={formData.password} onChange={handleChange} />
                     </div>
 
                     <div className="mx-auto max-w-screen-md w-80 text-sm">

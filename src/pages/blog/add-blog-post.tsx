@@ -14,6 +14,7 @@ const AddBlogPost: React.FC = () => {
     const [author, setAuthor] = useState('');
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     try {
         var blogPostService = new BlogPostService();
         const newBlogPost: IBlogPost = {
@@ -29,6 +30,7 @@ const AddBlogPost: React.FC = () => {
       // Call the addBlogPost method from BlogPostService to add the new blog post
       var success = await blogPostService.addBlogPost(newBlogPost);
       if (success) {
+        
         router.push('/');
       }
     } catch (error) {

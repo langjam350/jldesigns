@@ -38,8 +38,9 @@ class LoginService {
             // Sign in the user with email and password
             //const userCredential = await signInWithEmailAndPassword(auth, this.email, this.password);
             //if (!userCredential) {
-              //  return false;a
+              //  return false;
             //}
+
             // Now, access the "userInfo" collection in Firestore
             var UserInfoList: IUserInfo[] = [];
             const userInfoCollection = collection(db, 'userInfo');
@@ -57,31 +58,38 @@ class LoginService {
                 UserInfoList.push(userInfo);
             });
             console.log("get user info")
+            var loginResult = false;
             UserInfoList.forEach(async user => {
                 if(user.email = this.email) {
-                    var bool = await bcrypt.compare(user.password, password)
-                    console.log('Email Found.' + bool);
-                    if (bool) {
-                        console.log('Password Found.');
-                        this.loggedIn = true
-                        process.env.USER_EMAIL = this.email
-                    }
-                } 
-            })
+                    await bcrypt.compare(password, user.password, function(err, result) {
+                        console.log(password);
+                        console.log(user.password);
+                        if (err) {
+                            // Handle error
+                            console.error('Error comparing passwords:', err);
+                            return false;
+                        }
+                        if (result) {
+                            loginResult = true
+                            console.log('Passwords match'); // The plaintext password matches the hashed password
+                        } else {
+                            
+                            console.log('Passwords do not match'); // The plaintext password does not match the hashed password
+                        }
+                    });
+                }
+            });
             
-            if (this.loggedIn) {
-              // User information found in Firestore
-              return true
-              // You can now use userInfo in your application as needed
+            if (loginResult) {
+                process.env.USER_EMAIL = email;
+                console.log("User " + email + " is logged in")
+                // User information found in Firestore
+                return true
+                // You can now use userInfo in your application as needed
             } else {
-              // No user information found in Firestore
-              console.log('User information not found.');
-              return false
-            }
-            
-            // Optionally, you can navigate to another page upon successful sign-in
-            // router.push('/dashboard');
-            
+                // No user information found in Firestore
+                return false
+            };
           } catch (error) {
             console.error('Sign in error:', error);
             // Handle sign-in error (e.g., display error message to the user)
