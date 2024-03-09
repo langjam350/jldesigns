@@ -1,23 +1,40 @@
-// pages/blog/[slug].tsx
 import React from 'react';
-import IBlogPost from '../../models/IBlogPost'
-import '../../app/globals.css'
+import Head from 'next/head';
+import IBlogPost from '../../models/IBlogPost';
+import '../../app/globals.css';
 import Link from "next/link";
-import BlogPostService from '../../services/BlogPostService'
+import BlogPostService from '../../services/BlogPostService';
 
-// Define the type for the props
 interface BlogPostProps {
   post: IBlogPost;
 }
 
 const BlogPost: React.FC<BlogPostProps> = ({ post }) => {
+  // Method to extract keywords from content and title
+  const extractKeywords = (): Set<string[]>[] => {
+    const contentKeywords = post.content.split(' ').slice(0, 5).filter(Boolean); // Extract first 5 words from content and remove empty strings
+    const titleKeywords = post.title.split(' ').filter(Boolean); // Split title into words and remove empty strings
+  
+    // Combine content and title keywords and remove duplicates
+    const allKeywords = [new Set([contentKeywords, titleKeywords])];
+  
+    return allKeywords;
+  };
+
+  const keywords = extractKeywords();
+
   return (
     <div>
+      <Head>
+        <title>{post.title}</title>
+        <meta name="description" content={post.content.substring(0, 150)} />
+        <meta name="keywords" content={keywords.join(', ')} />
+      </Head>
       <div className="mb-4">
         <h1 className="text-3xl font-bold text-primary">{post.title}</h1>
         <p className="text-sm text-secondary">{post.date} | {post.author}</p>
       </div>
-      <p className="text-base text-primary" >{post.content}</p>
+      <p className="text-base text-primary">{post.content}</p>
       <br />
       <Link href="../blog" className="text-accent text-2xl font-bold border-primary w-full">Back to Blog</Link>
     </div>
@@ -61,4 +78,3 @@ export async function getStaticProps({ params }: { params: { slug: string } }) {
 }
 
 export default BlogPost;
-

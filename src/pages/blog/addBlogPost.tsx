@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/router';
 import BlogPostService from '@/services/BlogPostService';
 import IBlogPost from '@/models/IBlogPost';
+import '../../app/globals.css'
 
 const AddBlogPost: React.FC = () => {
     const router = useRouter();
@@ -13,30 +14,64 @@ const AddBlogPost: React.FC = () => {
     const [styles, setStyles] = useState('');
     const [author, setAuthor] = useState('');
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    try {
-        var blogPostService = new BlogPostService();
-        const newBlogPost: IBlogPost = {
-            id,
-            title,
-            slug,
-            content,
-            date,
-            styles,
-            author,
-        };
+    // Get today's date
+    const today = new Date();
 
-      // Call the addBlogPost method from BlogPostService to add the new blog post
-      var success = await blogPostService.addBlogPost(newBlogPost);
-      if (success) {
-        
-        router.push('/');
+    // Format the date to YYYY-MM-DD
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
+    const day = String(today.getDate()).padStart(2, '0');
+
+    const formattedDate = `${year}${month}${day}`; 
+    var blogPostService = new BlogPostService();
+    var slugValue = `${formattedDate}`
+
+    blogPostService.getLastBlogPostTodayId(formattedDate).then((result) => {
+        var idIncremented = String(Number(result) + 1)
+        slugValue = `${formattedDate}${idIncremented}`
+        setDate(formattedDate)
+        setSlug(slugValue)
+        setId(idIncremented)
+        if (process.env.USER_EMAIL) {
+          setAuthor(process.env.USER_EMAIL)
+        }
       }
-    } catch (error) {
-      console.error('Error adding document: ', error);
-    }
-  };
+    )
+    .catch(
+      (error) => {
+        slugValue = `${formattedDate}`;
+        throw error;
+      }
+    );
+
+    
+
+    
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      try {
+          
+          const newBlogPost: IBlogPost = {
+              id,
+              title,
+              slug,
+              content,
+              date,
+              styles,
+              author,
+          };
+
+        // Call the addBlogPost method from BlogPostService to add the new blog post
+        var success = await blogPostService.addBlogPost(newBlogPost);
+        if (success) {
+          
+          router.push('/');
+        }
+      } catch (error) {
+        console.error('Error adding document: ', error);
+      }
+    };
 
   return (
     (
@@ -71,6 +106,7 @@ const AddBlogPost: React.FC = () => {
                 onChange={(e) => setSlug(e.target.value)}
                 required
                 className="w-full border border-gray-300 rounded px-3 py-2"
+                
               />
             </div>
             <div>
@@ -86,11 +122,13 @@ const AddBlogPost: React.FC = () => {
             <div>
               <label className="block mb-2">Date:</label>
               <input
+                id="datefield"
                 type="text"
-                value={date}
+                value={formattedDate}
                 onChange={(e) => setDate(e.target.value)}
                 required
                 className="w-full border border-gray-300 rounded px-3 py-2"
+
               />
             </div>
             <div>

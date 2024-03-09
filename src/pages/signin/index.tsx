@@ -16,7 +16,7 @@ const SignInPage = () => {
     const loginService = new LoginService(); // Instantiate the LoginService
     const router = useRouter();
 
-    var loggedIn;
+    var loggedIn = false;
 
     const handleSignIn = async (e: React.FormEvent<HTMLFormElement>) => {
         if (e.type =='submit') {
@@ -24,11 +24,19 @@ const SignInPage = () => {
             loginService.setEmail(formData.email);
             loginService.setPassword(formData.password);
             console.log("signing in user " + formData.email)
-            var loggedIn = await loginService.handleSignIn(formData.email, formData.password);
-            console.log(loggedIn)
-            if (loggedIn) {
-                router.push('/blog')
-            }
+            loginService.handleSignIn(formData.email, formData.password).then(
+                (result) => {
+                    console.log(result)
+                    router.push('/blog') 
+                }
+            )
+            .catch(
+                (error) => {
+                    console.log(error)
+                    router.push('/signin')
+                }
+            );
+            
         }
         
     };

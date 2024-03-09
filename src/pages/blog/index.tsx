@@ -7,6 +7,7 @@ import Navigation from "../../components/Navigation"
 import IBlogPost, { BlogProps } from "../../models/IBlogPost"
 
 const Blog: React.FC<BlogProps> = ({ posts }) => {
+  console.log(process.env.USER_EMAIL)
   return (
     <div>
       <Navigation />
@@ -24,8 +25,12 @@ const Blog: React.FC<BlogProps> = ({ posts }) => {
               <br/>
             </li>
           ))}
-          {(process.env.USER_EMAIL != '' && process.env.USER_EMAIL) && (
-            <li><Link href={'blog/addBlogPost'}></Link></li>
+          {process.env.USER_EMAIL && (
+            <li>
+              <Link href="/blog/addBlogPost">
+                Add Blog Post
+              </Link>
+            </li>
           )}
         </ul>
       </div>

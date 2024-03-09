@@ -11,7 +11,7 @@ export default class BlogPostService {
         querySnapshot.forEach((doc: QueryDocumentSnapshot) => {
             const data = doc.data();
             const blogPost: IBlogPost = {
-                id: doc.id,
+                id: data.id,
                 title: data.title,
                 content: data.content,
                 slug: data.slug,
@@ -87,8 +87,17 @@ export default class BlogPostService {
         } catch (error) {
             console.error('Error adding blog post:', error);
             throw error;
-            return false
         }
+    }
+
+    async getLastBlogPostTodayId(formattedDate: string): Promise<String> {
+        var blogPosts = await this.getAllBlogPosts()
+        const todayBlogPosts = blogPosts.filter(post => post.date === formattedDate);
+        console.log(todayBlogPosts)
+    // Find the blog post with the highest ID among today's blog posts
+        const latestPost = todayBlogPosts.reduce((maxPost, post) => Number(post.id) > Number(maxPost.id) ? post : maxPost, { id: String(0) });
+
+        return latestPost.id; // Return undefined if no post found
     }
 }
 export const blogPostsMeta = [
