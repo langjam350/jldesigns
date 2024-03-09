@@ -25,6 +25,7 @@ const SignInPage = () => {
             loginService.setPassword(formData.password);
             console.log("signing in user " + formData.email)
             var loggedIn = await loginService.handleSignIn(formData.email, formData.password);
+            console.log(loggedIn)
             if (loggedIn) {
                 router.push('/blog')
             }

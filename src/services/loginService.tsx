@@ -67,37 +67,31 @@ class LoginService {
                         if (err) {
                             // Handle error
                             console.error('Error comparing passwords:', err);
-                            return false;
+                            return Promise.resolve(false);
                         }
                         if (result) {
+                            process.env.USER_EMAIL = email;
+                            console.log("User " + email + " is logged in")
                             loginResult = true
                             console.log('Passwords match'); // The plaintext password matches the hashed password
+                            return Promise.resolve(true);
                         } else {
                             
                             console.log('Passwords do not match'); // The plaintext password does not match the hashed password
+                            return Promise.resolve(false);
                         }
                     });
                 }
             });
-            
-            if (loginResult) {
-                process.env.USER_EMAIL = email;
-                console.log("User " + email + " is logged in")
-                // User information found in Firestore
-                return true
-                // You can now use userInfo in your application as needed
-            } else {
-                // No user information found in Firestore
-                return false
-            };
-          } catch (error) {
+        } catch (error) {
             console.error('Sign in error:', error);
             // Handle sign-in error (e.g., display error message to the user)
-            return false
-          }
+            return Promise.resolve(false)
+        }
+        return Promise.resolve(false);
     };
 
-    async handleSignUp(email: string, password: string): Promise<boolean> {
+    async handleSignUp(email: string, password: string): Promise<Boolean> {
         try {
            // const userCredential = await createUserWithEmailAndPassword(auth, this.email, this.password);
 
@@ -120,11 +114,11 @@ class LoginService {
             await addDoc(userInfoCollection, userInfo);
             console.log('User added successfully:');
 
-            return true;
+            return Promise.resolve(true)
         } catch(error) {
             console.error('Error adding user:', error);
-            throw error;
-        } 
+            return Promise.resolve(false)
+        }
     }
 }
 
