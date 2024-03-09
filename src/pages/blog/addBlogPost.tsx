@@ -32,8 +32,8 @@ const AddBlogPost: React.FC = () => {
         setDate(formattedDate)
         setSlug(slugValue)
         setId(idIncremented)
-        if (process.env.USER_EMAIL) {
-          setAuthor(process.env.USER_EMAIL)
+        if (process.env.NEXT_PUBLIC_USER_EMAIL) {
+          setAuthor(process.env.NEXT_PUBLIC_USER_EMAIL)
         }
       }
     )
