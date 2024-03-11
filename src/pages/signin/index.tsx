@@ -16,7 +16,6 @@ const SignInPage = () => {
     const loginService = new LoginService(); // Instantiate the LoginService
     const router = useRouter();
 
-    var loggedIn = false;
 
     const handleSignIn = async (e: React.FormEvent<HTMLFormElement>) => {
         if (e.type =='submit') {
@@ -87,6 +86,7 @@ const SignInPage = () => {
             </div>
         </div>
     );
+    
 };
 
 export default SignInPage;

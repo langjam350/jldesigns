@@ -5,9 +5,10 @@ import BlogPostService from '../../services/BlogPostService';
 import '../../app/globals.css'
 import Navigation from "../../components/Navigation"
 import IBlogPost, { BlogProps } from "../../models/IBlogPost"
-
+import AuthService from '@/services/AuthService';
+import dynamic from 'next/dynamic';
 const Blog: React.FC<BlogProps> = ({ posts }) => {
-  console.log(process.env.USER_EMAIL)
+
   return (
     <div>
       <Navigation />
@@ -25,13 +26,6 @@ const Blog: React.FC<BlogProps> = ({ posts }) => {
               <br/>
             </li>
           ))}
-          {process.env.USER_EMAIL && (
-            <li>
-              <Link href="/blog/addBlogPost">
-                Add Blog Post
-              </Link>
-            </li>
-          )}
         </ul>
       </div>
     </div>

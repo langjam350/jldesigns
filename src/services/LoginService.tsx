@@ -3,6 +3,7 @@ import { addDoc, collection, getDocs, QueryDocumentSnapshot } from 'firebase/fir
 //import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
 import bcrypt from 'bcryptjs'; // Import bcryptjs for password hashing
 import IUserInfo from '../models/IUserInfo';
+import AuthService from './AuthService';
 
 class LoginService {
     email = '';
@@ -70,10 +71,11 @@ class LoginService {
                             return Promise.resolve(false);
                         }
                         if (result) {
-                            //process.env.NEXT_PUBLIC_USER_EMAIL = user.email;
                             console.log("User " + email + " is logged in")
                             loginResult = true
                             console.log('Passwords match'); // The plaintext password matches the hashed password
+                            AuthService.signIn(email)
+                            console.log(localStorage.getItem('userEmail'))
                             return Promise.resolve(true);
                         } else {
                             

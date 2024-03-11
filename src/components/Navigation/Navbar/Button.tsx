@@ -1,15 +1,26 @@
 import Link from 'next/link'
+import AuthService from '@/services/AuthService';
+import dynamic from 'next/dynamic';
+
+const DynamicLink = dynamic(() => import('next/link'), { ssr: false });
 
 const Button = () => {
-  if(process.env.USER_EMAIL) {
-    return (
-      <Link className="rounded-lg flex items-center justify-center h-12 font-bold px-5 " href="/">Signed In As {process.env.USER_EMAIL}</Link>
-    )  
-  }
+  const isAuthenticated = AuthService.isAuthenticated();
+  const userEmail = AuthService.getUserEmail();
 
   return (
-    <Link className="rounded-lg flex items-center justify-center h-12 bg-white font-bold px-5 " href="/signin">Sign In</Link>
-  ) 
+    <div>
+       {isAuthenticated ? (
+        <DynamicLink href="/" className="rounded-lg flex items-center justify-center h-12 font-bold px-5">
+            Signed In As {userEmail}
+        </DynamicLink>
+      ) : (
+        <DynamicLink href="/signin" className="rounded-lg flex items-center justify-center h-12 bg-white font-bold px-5">
+            Sign In
+        </DynamicLink>
+      )}
+    </div>
+  );
     
 };
 export default Button;
