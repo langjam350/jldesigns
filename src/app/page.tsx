@@ -16,8 +16,8 @@ export default function Home() {
           <li className="text-lg">Financial Tools: Utilize budgeting templates and expense trackers to manage your finances effectively and plan for the future.</li>
           <li className="text-lg">Grade Tracking: Keep track of your academic progress with our grade tracking templates, helping you stay organized and motivated in your studies.</li>
         </ul>
-        <p className="text-lg">See our latest articles / blog contributions here:</p>
-          <ul></ul>
+        <p className="text-lg">Resume:</p>
+        <iframe src="./JL_Resume.pdf" className="max-w-4xl" width="100%" height="500px"></iframe>
       </div>
     </main>
   )
