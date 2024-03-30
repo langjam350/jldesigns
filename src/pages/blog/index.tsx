@@ -14,6 +14,8 @@ export interface BlogProps {
 
 const Blog: React.FC<BlogProps> = ({ posts }) => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
+  const [searchTerm, setSearchTerm] = useState<string>('');
+  const [searchResults, setSearchResults] = useState<IBlogPost[]>([]);
 
   useEffect(() => {
     const checkAuthentication = async () => {
@@ -31,13 +33,30 @@ const Blog: React.FC<BlogProps> = ({ posts }) => {
     }
   }, []);
 
+  useEffect(() => {
+    const results = posts.filter(post =>
+      post.content.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setSearchResults(results);
+  }, [searchTerm, posts]);
+
   return (
     <div>
       <Navigation />
       <div>
         <h1 className="text-3xl font-bold underline">Blog</h1>
+        <p className="text-sm text-gray-600 mb-4">Welcome to our information database. Here, you can explore various blog posts on different topics. Use the search feature below to find posts by content.</p>
+        <div className="search-container mb-4">
+          <input
+            type="text"
+            placeholder="Search by content..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="border border-gray-300 px-3 py-2 rounded-md w-full"
+          />
+        </div>
         <div className="blog-container">
-          {posts.map((post) => (
+          {searchResults.map((post) => (
             <div key={post.id} className="blog-post">
               <Link href={`/blog/${post.slug}`}>
                   <h2 className="text-xl font-semibold">{post.title}</h2>
