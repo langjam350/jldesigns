@@ -56,11 +56,11 @@ const AddBlogPost = () => {
     var slugValue = `${formattedDate}`
 
     blogPostService.getLastBlogPostTodayId(formattedDate).then(async (result) => {
-        var idIncremented = String(Number(result) + 1)
+        var idIncremented = Number(result.at(result.length - 1)) + 1 
         slugValue = `${formattedDate}${idIncremented}`
         setDate(formattedDate)
         setSlug(slugValue)
-        setId(idIncremented)
+        setId(slugValue)
         if (AuthService.isAuthenticated()) {
           const userEmail = AuthService.getUserEmail()
           if(userEmail) {
@@ -73,15 +73,20 @@ const AddBlogPost = () => {
       }
     )
     .catch(
-      (error) => {
+      (error) => {5
         slugValue = `${formattedDate}`;
         throw error;
       }
     );
 
+    const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+      setContent(e.target.value); // Update content state with newline characters   
+    };
+
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       try {
+        
         const newBlogPost: IBlogPost = {
             id,
             title,
@@ -144,9 +149,9 @@ const AddBlogPost = () => {
                 <label className="block mb-2">Content:</label>
                 <textarea
                   value={content}
-                  onChange={(e) => setContent(e.target.value)}
+                  onChange={handleContentChange}
                   required
-                  className="w-full border border-gray-300 rounded px-3 py-2"
+                  className="w-full border border-gray-300 rounded px-3 py-2 blogPostContent"
                   rows={6}
                 />
               </div>

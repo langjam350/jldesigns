@@ -22,7 +22,7 @@ const BlogPost: React.FC<BlogPostProps> = ({ post }) => {
   };
 
   const keywords = extractKeywords();
-
+  console.log(post.content)
   return (
     <div>
       <Head>
@@ -34,7 +34,7 @@ const BlogPost: React.FC<BlogPostProps> = ({ post }) => {
         <h1 className="text-3xl font-bold text-primary">{post.title}</h1>
         <p className="text-sm text-secondary">{post.date} | {post.author}</p>
       </div>
-      <p className="text-base text-primary" dangerouslySetInnerHTML={{ __html: post.content }}></p>
+      <p className="text-base text-primary" dangerouslySetInnerHTML={{ __html: post.content.replaceAll('\n', '<br/>') }}></p>
       <br />
       <Link href="../blog" className="text-accent text-2xl font-bold border-primary w-full">Back to Blog</Link>
     </div>

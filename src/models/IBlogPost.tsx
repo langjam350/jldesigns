@@ -8,8 +8,3 @@ export default interface IBlogPost {
     styles: string;
     author: string;
   }
-  
-  // Define the type for the props
-export interface BlogProps {
-    posts: IBlogPost[];
-}

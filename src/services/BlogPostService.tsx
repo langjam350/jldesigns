@@ -19,6 +19,8 @@ export default class BlogPostService {
                 styles: data.styles,
                 author: data.author
             };
+
+            
             blogPosts.push(blogPost);
         });
         return blogPosts;
@@ -35,7 +37,10 @@ export default class BlogPostService {
             if(blogPost.slug == slug) {
                  returnBlogPost = blogPost
             }
+            console.log(blogPost.content)
         })
+
+        
 
         if (returnBlogPost){
             return returnBlogPost;
@@ -60,7 +65,7 @@ export default class BlogPostService {
             querySnapshot.forEach((doc: QueryDocumentSnapshot) => {
                 const data = doc.data();
                 const blogPost: IBlogPost = {
-                    id: doc.id,
+                    id: data.id,
                     title: data.title,
                     content: data.content,
                     slug: data.slug,
@@ -81,6 +86,7 @@ export default class BlogPostService {
     async addBlogPost(blogPost: IBlogPost): Promise<Boolean> {
         try {
             const blogPostsCollection = collection(db, 'blogPosts');
+            console.log(blogPost.content)
             await addDoc(blogPostsCollection, blogPost);
             console.log('Blog post added successfully');
             return true
@@ -93,11 +99,13 @@ export default class BlogPostService {
     async getLastBlogPostTodayId(formattedDate: string): Promise<String> {
         var blogPosts = await this.getAllBlogPosts()
         const todayBlogPosts = blogPosts.filter(post => post.date === formattedDate);
-        console.log(todayBlogPosts)
     // Find the blog post with the highest ID among today's blog posts
         const latestPost = todayBlogPosts.reduce((maxPost, post) => Number(post.id) > Number(maxPost.id) ? post : maxPost, { id: String(0) });
-
-        return latestPost.id; // Return undefined if no post found
+        if (latestPost) {
+            return latestPost.id;
+        }
+        return "0"
+         // Return undefined if no post found
     }
 }
 export const blogPostsMeta = [

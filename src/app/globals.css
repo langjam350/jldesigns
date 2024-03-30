@@ -37,6 +37,28 @@
     font-size: 24pt;
 }
 
+.blogPostContent {
+    white-space: pre-wrap;
+}
+
+.blog-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-gap: 20px;
+}
+.blog-post {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.blog-post h2 {
+    margin-bottom: 10px;
+}
+.blog-post p {
+    margin-bottom: 5px;
+}
+
 /* Mobile-first Responsive Design */
 /* Apply mobile-friendly styles by default */
 
