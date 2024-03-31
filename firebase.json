@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": ".next/server/app",
+    "public": ".next/server",
     "cleanUrls": true,
     "ignore": [
       "firebase.json",
