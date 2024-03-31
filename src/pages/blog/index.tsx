@@ -34,10 +34,12 @@ const Blog: React.FC<BlogProps> = ({ posts }) => {
   }, []);
 
   useEffect(() => {
-    const results = posts.filter(post =>
-      post.content.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-    setSearchResults(results);
+    if(searchTerm.toLowerCase() === "") {
+      const results = posts.filter(post =>
+        post.content.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      setSearchResults(results);
+    }
   }, [searchTerm, posts]);
 
   return (
