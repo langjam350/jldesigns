@@ -1,5 +1,5 @@
 // Import necessary modules
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import BlogPostService from '../../services/BlogPostService';
 import '../../app/globals.css';
@@ -8,16 +8,16 @@ import IBlogPost from '../../models/IBlogPost';
 import AuthService from '@/services/AuthService';
 
 // Define the type for the props
-export interface BlogProps {
+interface BlogProps {
   posts: IBlogPost[];
 }
 
 const Blog: React.FC<BlogProps> = ({ posts }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
-  const [searchTerm, setSearchTerm] = useState<string>('');
-  const [searchResults, setSearchResults] = useState<IBlogPost[]>([]);
+  const [isAuthenticated, setIsAuthenticated] = React.useState<boolean | null>(null);
+  const [searchTerm, setSearchTerm] = React.useState<string>('');
+  const [searchResults, setSearchResults] = React.useState<IBlogPost[]>(posts); // Initialize search results with all posts
 
-  useEffect(() => {
+  React.useEffect(() => {
     const checkAuthentication = async () => {
       try {
         const authenticated = await AuthService.isAuthenticated();
@@ -33,14 +33,16 @@ const Blog: React.FC<BlogProps> = ({ posts }) => {
     }
   }, []);
 
-  useEffect(() => {
-    if(searchTerm.toLowerCase() === "") {
-      const results = posts.filter(post =>
-        post.content.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-      setSearchResults(results);
-    }
-  }, [searchTerm, posts]);
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const searchTerm = e.target.value.toLowerCase();
+    setSearchTerm(searchTerm);
+
+    // Filter posts based on search term
+    const results = posts.filter(post =>
+      post.content.toLowerCase().includes(searchTerm)
+    );
+    setSearchResults(results);
+  };
 
   return (
     <div>
@@ -53,7 +55,7 @@ const Blog: React.FC<BlogProps> = ({ posts }) => {
             type="text"
             placeholder="Search by content..."
             value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            onChange={handleSearch}
             className="border border-gray-300 px-3 py-2 rounded-md w-full"
           />
         </div>
@@ -80,15 +82,16 @@ const Blog: React.FC<BlogProps> = ({ posts }) => {
   );
 };
 
-// Fetch blog posts statically
+// Fetch blog posts statically at build time
 export async function getStaticProps() {
-  var blogPostService = new BlogPostService();
+  const blogPostService = new BlogPostService();
   const posts: IBlogPost[] = await blogPostService.getAllBlogPosts();
 
   return {
     props: {
       posts,
     },
+    revalidate: 60, // Re-generate the page every 60 seconds to fetch new data
   };
 }
 
