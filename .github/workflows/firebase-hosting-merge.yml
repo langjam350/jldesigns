@@ -22,7 +22,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: built-files
-          path: .   # Specify the path to the built files
+          path: .next   # Specify the path to the built files
 
   deploy:
     needs: build
@@ -40,4 +40,3 @@ jobs:
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_JLDESIGNS }}'
           channelId: live
           projectId: jldesigns
-          public_dir: .   # Specify the
