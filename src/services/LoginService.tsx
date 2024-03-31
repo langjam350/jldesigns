@@ -63,8 +63,6 @@ class LoginService {
             UserInfoList.forEach(async user => {
                 if(user.email == this.email) {
                     await bcrypt.compare(password, user.password, function(err, result) {
-                        console.log(password);
-                        console.log(user.password);
                         if (err) {
                             // Handle error
                             console.error('Error comparing passwords:', err);
@@ -73,9 +71,7 @@ class LoginService {
                         if (result) {
                             console.log("User " + email + " is logged in")
                             loginResult = true
-                            console.log('Passwords match'); // The plaintext password matches the hashed password
                             AuthService.signIn(email)
-                            console.log(localStorage.getItem('userEmail'))
                             return Promise.resolve(true);
                         } else {
                             

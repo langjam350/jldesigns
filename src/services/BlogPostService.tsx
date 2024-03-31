@@ -37,7 +37,6 @@ export default class BlogPostService {
             if(blogPost.slug == slug) {
                  returnBlogPost = blogPost
             }
-            console.log(blogPost.content)
         })
 
         
@@ -86,7 +85,6 @@ export default class BlogPostService {
     async addBlogPost(blogPost: IBlogPost): Promise<Boolean> {
         try {
             const blogPostsCollection = collection(db, 'blogPosts');
-            console.log(blogPost.content)
             await addDoc(blogPostsCollection, blogPost);
             console.log('Blog post added successfully');
             return true
