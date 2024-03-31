@@ -91,7 +91,6 @@ export async function getStaticProps() {
     props: {
       posts,
     },
-    revalidate: 60, // Re-generate the page every 60 seconds to fetch new data
   };
 }
 

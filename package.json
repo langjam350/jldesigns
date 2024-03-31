@@ -9,6 +9,7 @@
     "start": "next start -p 4000",
     "lint": "next lint",
     "serve": "npx serv@latest out",
+    "export": "next export",
     "build:css": "tailwindcss build -i src/app/globals.css -o out/globals.css"
   },
   "dependencies": {
