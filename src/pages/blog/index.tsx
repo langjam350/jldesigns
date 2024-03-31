@@ -45,7 +45,7 @@ const Blog: React.FC<BlogProps> = ({ posts }) => {
       <Navigation />
       <div>
         <h1 className="text-3xl font-bold underline">Blog</h1>
-        <p className="text-sm text-gray-600 mb-4">Welcome to our information database. Here, you can explore various blog posts on different topics. Use the search feature below to find posts by content.</p>
+        <p className="text-sm text-gray-600 mb-4">The intention of this portion of the site is to serve as a completely searchable information database. Here we have many articles, some generated with the help of AI, but all discussing important health or other topics. Use this as you would google or another search engine, and ensure you check the information you see. The pro of generating AI is that it's easy to generate multiple articles with certain perspectives and points of view on topics. Use the search feature below to find posts by their content. In the future we're hoping to add comments and categories to better show the relevant topics here as well.</p>
         <div className="search-container mb-4">
           <input
             type="text"
