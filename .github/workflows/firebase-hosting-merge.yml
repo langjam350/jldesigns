@@ -7,7 +7,7 @@ name: Deploy to Firebase Hosting on merge
     branches:
       - main
 jobs:
-  build:
+  build_and_deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -18,21 +18,6 @@ jobs:
           npm ci
           npm run build
 
-      - name: Archive built files
-        uses: actions/upload-artifact@v2
-        with:
-          name: built-files
-          path: .next   # Specify the path to the built files
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Download built files
-        uses: actions/download-artifact@v2
-        with:
-          name: built-files   # Specify the same name used in the upload step
-
       - name: Deploy to Firebase Hosting
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
@@ -40,3 +25,5 @@ jobs:
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_JLDESIGNS }}'
           channelId: live
           projectId: jldesigns
+
+      
