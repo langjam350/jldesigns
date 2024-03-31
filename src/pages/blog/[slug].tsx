@@ -22,21 +22,22 @@ const BlogPost: React.FC<BlogPostProps> = ({ post }) => {
   };
 
   const keywords = extractKeywords();
-  console.log(post.content)
+
   return (
-    <div>
+    <div className="bg-accent">
       <Head>
         <title>{post.title}</title>
         <meta name="description" content={post.content.substring(0, 150)} />
         <meta name="keywords" content={keywords.join(', ')} />
       </Head>
-      <div className="mb-4">
-        <h1 className="text-3xl font-bold text-primary">{post.title}</h1>
-        <p className="text-sm text-secondary">{post.date} | {post.author}</p>
+      <div className="container mx-auto px-4 ">
+        <div className="bg-white rounded-lg shadow-md p-6 mb-8">
+          <h1 className="text-3xl font-bold text-primary mb-4">{post.title}</h1>
+          <p className="text-sm text-secondary mb-4">{post.date} | {post.author}</p>
+          <div className="text-base text-primary" dangerouslySetInnerHTML={{ __html: post.content.replaceAll('\n', '<br/>') }}></div>
+        </div>
+        <Link href="../blog" className="block text-accent text-2xl font-bold border-primary w-full text-center py-2 rounded-md bg-primary text-white hover:bg-primary-dark transition duration-300">Back to Blog</Link>
       </div>
-      <p className="text-base text-primary" dangerouslySetInnerHTML={{ __html: post.content.replaceAll('\n', '<br/>') }}></p>
-      <br />
-      <Link href="../blog" className="text-accent text-2xl font-bold border-primary w-full">Back to Blog</Link>
     </div>
   );
 };
