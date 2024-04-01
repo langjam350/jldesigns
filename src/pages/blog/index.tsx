@@ -1,4 +1,3 @@
-// Import necessary modules
 import React from 'react';
 import Link from 'next/link';
 import BlogPostService from '../../services/BlogPostService';
@@ -44,6 +43,35 @@ const Blog: React.FC<BlogProps> = ({ posts }) => {
     setSearchResults(results);
   };
 
+  // Define a mapping of category to color
+  const categoryBackgroundColors: { [key: string]: string } = {
+    wellness: '#2cd27e',
+    code: '#3ae5e7',
+    diet: '#f5cf1d',
+    misc: 'white',
+    fitness: '#f7093b'
+    // Add more categories and corresponding colors as needed
+  };
+
+  // Function to get background color based on category
+  const getBackgroundColor = (category: string): string => {
+    return categoryBackgroundColors[category] || 'black'; // Default color is white if category is not found
+  };
+
+  // Define a mapping of category to color
+  const categoryColors: { [key: string]: string } = {
+    wellness: 'white',
+    code: 'white',
+    misc: 'black',
+    diet: 'black'
+    // Add more categories and corresponding colors as needed
+  };
+
+  // Function to get background color based on category
+  const getColor = (category: string): string => {
+    return categoryColors[category] || 'white'; // Default color is white if category is not found
+  };
+
   return (
     <div>
       <Navigation />
@@ -61,7 +89,7 @@ const Blog: React.FC<BlogProps> = ({ posts }) => {
         </div>
         <div className="blog-container">
           {searchResults.map((post) => (
-            <div key={post.id} className="blog-post">
+            <div key={post.id} className="blog-post" style={{ backgroundColor: getBackgroundColor(post.category), color: getColor(post.category) }}>
               <Link href={`/blog/${post.slug}`}>
                   <h2 className="text-xl font-semibold">{post.title}</h2>
               </Link>

@@ -6,16 +6,17 @@ import '../../app/globals.css'
 import AuthService from '@/services/AuthService';
 
 const AddBlogPost = () => {
-    const router = useRouter();
-    const [id, setId] = useState('');
-    const [title, setTitle] = useState('');
-    const [slug, setSlug] = useState('');
-    const [content, setContent] = useState('');
-    const [date, setDate] = useState('');
-    const [styles, setStyles] = useState('');
-    const [author, setAuthor] = useState('');
-    const [usedAI, setUsedAI] = useState(false)
-
+  const router = useRouter();
+  const [id, setId] = useState('');
+  const [title, setTitle] = useState('');
+  const [slug, setSlug] = useState('');
+  const [content, setContent] = useState('');
+  const [date, setDate] = useState('');
+  const [styles, setStyles] = useState('');
+  const [author, setAuthor] = useState('');
+  const [usedAI, setUsedAI] = useState(false);
+  const [category, setCategory] = useState('');
+  const [categories, setCategories] = useState<string[]>([]);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
 
 
@@ -61,6 +62,8 @@ const AddBlogPost = () => {
         setDate(formattedDate)
         setSlug(slugValue)
         setId(slugValue)
+        const fetchedCategories = await blogPostService.getCategories();
+        setCategories(fetchedCategories);
         if (AuthService.isAuthenticated()) {
           const userEmail = AuthService.getUserEmail()
           if(userEmail) {
@@ -95,6 +98,7 @@ const AddBlogPost = () => {
             date,
             styles,
             author,
+            category
         };
 
         // Call the addBlogPost method from BlogPostService to add the new blog post
@@ -189,6 +193,19 @@ const AddBlogPost = () => {
                   onChange={(e) => setUsedAI(e.target.checked)}
                   className="border border-gray-300 rounded px-3 py-2"
                 />
+              </div>
+              <div>
+                <label className="block mb-2">Category:</label>
+                <select
+                  value={category}
+                  onChange={(e) => setCategory(e.target.value)}
+                  className="w-full border border-gray-300 rounded px-3 py-2"
+                >
+                  <option value="">Select Category</option>
+                  {categories.map((cat, index) => (
+                    <option key={index} value={cat}>{cat}</option>
+                  ))}
+                </select>
               </div>
               <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
                 Submit

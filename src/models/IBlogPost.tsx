@@ -7,4 +7,5 @@ export default interface IBlogPost {
     date: string;
     styles: string;
     author: string;
+    category: string;
   }

@@ -2,6 +2,22 @@ import IBlogPost from '../models/IBlogPost'
 import { db } from '../../lib/firebase'
 import { addDoc, collection, getDocs, QueryDocumentSnapshot } from 'firebase/firestore';
 export default class BlogPostService {
+    async getCategories(): Promise<string[]> {
+        try {
+            var categoryList: string[] = [];
+            const blogPostsCollection = collection(db, 'blogCategories');
+            const querySnapshot = await getDocs(blogPostsCollection);  
+            querySnapshot.forEach((doc: QueryDocumentSnapshot) => {
+                const data = doc.data();
+                categoryList.push(data.name);
+            });
+            return categoryList;
+        } catch (error) {
+            console.error('Error getting blog posts:', error);
+            throw error;
+        }
+    }
+    
     // Function to get all blog posts from the Firestore collection
     async getAllBlogPosts(): Promise<IBlogPost[]> {
     try {
@@ -17,7 +33,8 @@ export default class BlogPostService {
                 slug: data.slug,
                 date: data.date,
                 styles: data.styles,
-                author: data.author
+                author: data.author,
+                category: data.category
             };
 
             
@@ -52,7 +69,8 @@ export default class BlogPostService {
             slug: "",
             author: "",
             styles: "",
-            date: ""
+            date: "",
+            category: ""
         };
     }
 
@@ -70,7 +88,8 @@ export default class BlogPostService {
                     slug: data.slug,
                     date: data.date,
                     styles: data.styles,
-                    author: data.author
+                    author: data.author,
+                    category: data.category
                 };
                 staticPaths.push(blogPost.slug);
             });
