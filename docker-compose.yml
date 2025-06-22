@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  jldesigns-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        APP_ENV: development
+    ports:
+      - "4000:4000"
+    environment:
+      - NODE_ENV=development
+      - NEXT_PUBLIC_APP_ENV=development
+    env_file:
+      - .env.development
+    volumes:
+      - ./src:/app/src
+      - ./public:/app/public
+      - /app/node_modules
+    networks:
+      - jldesigns-network
+
+networks:
+  jldesigns-network:
+    driver: bridge

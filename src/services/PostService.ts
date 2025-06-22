@@ -1,0 +1,238 @@
+import IPost, { IPostWithMetadata } from '../models/IPost';
+
+export interface IPostService {
+    addPost(post: Partial<IPost>): Promise<boolean>;
+    getNextPost(): Promise<IPost | null>;
+    getAllPosts(): Promise<IPost[]>;
+    getPostById(postId: string): Promise<IPost | null>;
+    addVideoToPost(postId: string, videoId: string): Promise<{ success: boolean; message: string; error?: string }>;
+    approvePost(postId: string): Promise<{ success: boolean; message: string; error?: string }>;
+    addTopicToQueue(topic: string): Promise<boolean>;
+    getAllPostsWithMetadata(): Promise<IPostWithMetadata[]>;
+}
+
+const BASE_URL = process.env.NEXT_PUBLIC_APP_ENV === 'development' 
+    ? 'http://localhost:4000' 
+    : 'https://jldesigns.vercel.app';
+
+export default class PostService implements IPostService {
+    public async addPost(post: Partial<IPost>): Promise<boolean> {
+        try {
+            // Create a new post with default values
+            const newPost: Partial<IPost> = {
+                ...post,
+                createdAt: new Date(),
+                updatedAt: new Date(),
+                videos: post.videos || [], // Initialize empty videos array if not provided
+                URL: post.URL || `${BASE_URL}/posts/${post.slug || post.postId}`,
+            };
+
+            // Send the new post to the API endpoint
+            const response = await fetch('/api/posts/addPost', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(newPost),
+            });
+
+            if (!response.ok) {
+                console.error('Failed to add post:', response.statusText);
+                return false;
+            }
+
+            return true;
+        } catch (error) {
+            console.error('Error adding post:', error);
+            return false;
+        }
+    }
+
+    public async getNextPost(): Promise<IPost | null> {
+        try {
+            const response = await fetch(`${BASE_URL}/api/posts/getNextPostForVideoGeneration`);
+            
+            if (!response.ok) {
+                console.error(`Error fetching next post: ${response.status} ${response.statusText}`);
+                return null;
+            }
+            
+            const data = await response.json();
+            
+            // Check if we have valid data
+            if (!data) {
+                console.log('No posts available for video generation');
+                return null;
+            }
+            
+            return data as IPost;
+        } catch (error) {
+            console.error('Error in getNextPost:', error);
+            return null;
+        }
+    }
+
+    // Get all posts for dropdown selection
+    public async getAllPosts(): Promise<IPost[]> {
+        try {
+            const response = await fetch(`${BASE_URL}/api/posts/getAllPosts`);
+            
+            if (!response.ok) {
+                console.error(`Error fetching all posts: ${response.status} ${response.statusText}`);
+                return [];
+            }
+            
+            const data = await response.json();
+            
+            if (!Array.isArray(data)) {
+                console.error('Expected array of posts, got:', typeof data);
+                return [];
+            }
+            
+            return data as IPost[];
+        } catch (error) {
+            console.error('Error in getAllPosts:', error);
+            return [];
+        }
+    }
+
+    // Get specific post by ID
+    public async getPostById(postId: string): Promise<IPost | null> {
+        try {
+            const response = await fetch(`${BASE_URL}/api/posts/getPostById`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ postId }),
+            });
+            
+            if (!response.ok) {
+                console.error(`Error fetching post by ID: ${response.status} ${response.statusText}`);
+                return null;
+            }
+            
+            const data = await response.json();
+            
+            if (!data) {
+                console.log(`No post found with ID: ${postId}`);
+                return null;
+            }
+            
+            return data as IPost;
+        } catch (error) {
+            console.error('Error in getPostById:', error);
+            return null;
+        }
+    }
+    
+    // Add video ID to post's videos array
+    public async addVideoToPost(postId: string, videoId: string): Promise<{ success: boolean; message: string; error?: string }> {
+        try {
+            const response = await fetch(`${BASE_URL}/api/posts/addVideoToPost`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ 
+                    postId,
+                    videoId
+                }),
+            });
+            
+            const data = await response.json();
+            
+            if (!response.ok) {
+                console.error(`Failed to add video to post: ${response.status} ${response.statusText}`);
+                return {
+                    success: false,
+                    message: data.message || 'Failed to add video to post',
+                    error: data.error || response.statusText
+                };
+            }
+            
+            return {
+                success: true,
+                message: data.message || 'Video added to post successfully'
+            };
+        } catch (error: any) {
+            console.error('Error adding video to post:', error);
+            return {
+                success: false,
+                message: 'Network error occurred',
+                error: error.message || 'Unknown error'
+            };
+        }
+    }
+
+    public async approvePost(postId: string): Promise<{ success: boolean; message: string; error?: string }> {
+        try {
+            const response = await fetch(`${BASE_URL}/api/posts/approveVideoWithPostId`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ postId }),
+            });
+            
+            const data = await response.json();
+            
+            if (!response.ok) {
+                console.error(`Failed to approve post: ${response.status} ${response.statusText}`);
+                return {
+                    success: false,
+                    message: data.message || 'Failed to approve post',
+                    error: data.error || response.statusText
+                };
+            }
+            
+            return {
+                success: true,
+                message: data.message || 'Post approved successfully'
+            };
+        } catch (error: any) {
+            console.error('Error approving post:', error);
+            return {
+                success: false,
+                message: 'Network error occurred',
+                error: error.message || 'Unknown error'
+            };
+        }
+    }
+
+    public async addTopicToQueue(topic: string): Promise<boolean> {
+        try {
+            const response = await fetch(`${BASE_URL}/api/posts/addTopicToQueue`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ topic }),
+            });
+
+            if (!response.ok) {
+                console.error(`Failed to add topic to queue: ${response.status} ${response.statusText}`);
+                return false;
+            }
+
+            return true;
+        } catch (error) {
+            console.error(`Error adding topic to queue: ${error}`);
+            return false;
+        }
+    }
+
+    // Get all posts with metadata for dashboard
+    public async getAllPostsWithMetadata(): Promise<IPostWithMetadata[]> {
+        try {
+            const response = await fetch(`${BASE_URL}/api/posts/getPostsWithMetadata`);
+            
+            if (!response.ok) {
+                console.error(`Error fetching posts with metadata: ${response.status} ${response.statusText}`);
+                return [];
+            }
+            
+            const data = await response.json();
+            
+            if (!Array.isArray(data)) {
+                console.error('Expected array of posts, got:', typeof data);
+                return [];
+            }
+            
+            return data as IPostWithMetadata[];
+        } catch (error) {
+            console.error('Error in getAllPostsWithMetadata:', error);
+            return [];
+        }
+    }
+}

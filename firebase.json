@@ -1,45 +1,141 @@
 {
-  "hosting": {
-    "public": "out",
-    "cleanUrls": true,
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
-    ],
-    "rewrites": [
-      {
-        "source": "websites",
-        "destination": "websites"
-      },
-      {
-        "source": "fitness",
-        "destination": "fitness"
-      },
-      {
-        "source": "blog",
-        "destination": "blog"
-      },
-      {
-        "source": "signin",
-        "destination": "signin"
-      },
-      {
-        "source": "signup",
-        "destination": "signup"
-      },
-      {
-        "source": "blog/:slug",
-        "destination": "blog/[slug]"
-      },
-      {
-        "source": "blog/addBlogPost",
-        "destination": "addBlogPost"
-      },
-      {
-        "source": "**",
-        "destination": "/index"
-      }
-    ]
-  }
+  "hosting": [
+    {
+      "target": "production",
+      "public": "out",
+      "cleanUrls": true,
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "rewrites": [
+        {
+          "source": "/api/**",
+          "run": {
+            "serviceId": "jldesigns-app",
+            "region": "us-central1"
+          }
+        },
+        {
+          "source": "video-dashboard",
+          "destination": "video-dashboard"
+        },
+        {
+          "source": "generate-posts",
+          "destination": "generate-posts"
+        },
+        {
+          "source": "websites",
+          "destination": "websites"
+        },
+        {
+          "source": "fitness",
+          "destination": "fitness"
+        },
+        {
+          "source": "blog",
+          "destination": "blog"
+        },
+        {
+          "source": "signin",
+          "destination": "signin"
+        },
+        {
+          "source": "signup",
+          "destination": "signup"
+        },
+        {
+          "source": "blog/:slug",
+          "destination": "blog/[slug]"
+        },
+        {
+          "source": "blog/addBlogPost",
+          "destination": "addBlogPost"
+        },
+        {
+          "source": "**",
+          "destination": "/index"
+        }
+      ]
+    },
+    {
+      "target": "development",
+      "public": "out",
+      "cleanUrls": true,
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "rewrites": [
+        {
+          "source": "/api/**",
+          "run": {
+            "serviceId": "jldesigns-app-dev",
+            "region": "us-central1"
+          }
+        },
+        {
+          "source": "video-dashboard",
+          "destination": "video-dashboard"
+        },
+        {
+          "source": "generate-posts",
+          "destination": "generate-posts"
+        },
+        {
+          "source": "websites",
+          "destination": "websites"
+        },
+        {
+          "source": "fitness",
+          "destination": "fitness"
+        },
+        {
+          "source": "blog",
+          "destination": "blog"
+        },
+        {
+          "source": "signin",
+          "destination": "signin"
+        },
+        {
+          "source": "signup",
+          "destination": "signup"
+        },
+        {
+          "source": "blog/:slug",
+          "destination": "blog/[slug]"
+        },
+        {
+          "source": "blog/addBlogPost",
+          "destination": "addBlogPost"
+        },
+        {
+          "source": "**",
+          "destination": "/index"
+        }
+      ],
+      "headers": [
+        {
+          "source": "/api/**",
+          "headers": [
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "http://localhost:4000"
+            },
+            {
+              "key": "Access-Control-Allow-Methods",
+              "value": "GET, POST, PUT, DELETE, OPTIONS"
+            },
+            {
+              "key": "Access-Control-Allow-Headers",
+              "value": "Content-Type, Authorization"
+            }
+          ]
+        }
+      ]
+    }
+  ]
 }
