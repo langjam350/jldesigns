@@ -2,7 +2,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { collection, getDocs, query, orderBy } from 'firebase/firestore';
 import { db } from '../../../../lib/firebase';
-import IPost, { IPostWithMetadata } from '../../../models/IPost';
+import IPost from '../../../models/IPost';
+import { IPostWithMetadata } from '../../../models/IPost';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (req.method === 'GET') {

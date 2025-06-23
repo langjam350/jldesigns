@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import IPost, { IPostWithMetadata } from "../../models/IPost";
+import IPost from "../../models/IPost";
+import { IPostWithMetadata } from "../../models/IPost";
 import PostDAL from "../../dal/PostDAL";
 import VideoService from "../../services/VideoService";
 import VideoDAL from "../../dal/VideoDAL";

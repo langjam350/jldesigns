@@ -1,4 +1,5 @@
-import IPost, { IPostWithMetadata } from '../models/IPost';
+import IPost from '../models/IPost';
+import { IPostWithMetadata } from '../models/IPost';
 
 export interface IPostService {
     addPost(post: Partial<IPost>): Promise<boolean>;

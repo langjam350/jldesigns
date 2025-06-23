@@ -1,6 +1,7 @@
 // src/dal/PostDAL.ts
 import axios from 'axios';
-import IPost, { IPostWithMetadata } from '../models/IPost';
+import IPost from '../models/IPost';
+import { IPostWithMetadata } from '../models/IPost';
 
 const BASE_URL = process.env.NEXT_PUBLIC_APP_ENV === 'development' 
   ? 'http://localhost:4000' 
