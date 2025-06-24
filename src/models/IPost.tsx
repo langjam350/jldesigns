@@ -14,6 +14,8 @@ export default interface IPost {
     tags?: string[]; // Content tags
     author?: string; // Post author
     publishedAt?: Date; // Publication date
+    isPublic?: boolean; // Publication status
+    status?: string; // Draft/published status
 }
 
 // Extended interface with metadata for enhanced post management

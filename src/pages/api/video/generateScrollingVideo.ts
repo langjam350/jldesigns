@@ -343,7 +343,7 @@ async function captureScrollingVideo(url: string, durationInSeconds: number, tem
           await new Promise(resolve => setTimeout(resolve, 200));
           
           await page.screenshot({ 
-            path: path.join(framesDir, `frame_${j.toString().padStart(5, '0')}.jpg`),
+            path: path.join(framesDir, `frame_${j.toString().padStart(5, '0')}.jpg`) as `${string}.jpeg`,
             type: 'jpeg',
             quality: 85
           });

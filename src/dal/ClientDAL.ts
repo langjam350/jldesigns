@@ -121,7 +121,7 @@ export default class ClientDAL {
   async deleteClient(id: string): Promise<boolean> {
     const query = 'DELETE FROM clients WHERE id = $1';
     const result = await this.pool.query(query, [id]);
-    return result.rowCount > 0;
+    return (result.rowCount ?? 0) > 0;
   }
 
   // Client Users
@@ -200,6 +200,6 @@ export default class ClientDAL {
   async deleteClientUser(id: string): Promise<boolean> {
     const query = 'DELETE FROM client_users WHERE id = $1';
     const result = await this.pool.query(query, [id]);
-    return result.rowCount > 0;
+    return (result.rowCount ?? 0) > 0;
   }
 }

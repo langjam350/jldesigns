@@ -199,7 +199,7 @@ const PostGenerator = () => {
                         {generatedPosts.map((post) => (
                             <li key={post.id} className="border-b border-gray-300 py-2">
                                 <div><strong>Title:</strong> {post.title}</div>
-                                <div><strong>Content:</strong><div dangerouslySetInnerHTML={{ __html: post.content }}></div></div>
+                                <div><strong>Content:</strong><div dangerouslySetInnerHTML={{ __html: post.content || '' }}></div></div>
                                 <div><strong>Slug:</strong> {post.slug}</div>
                                 {/* Approve/Unapprove button */}
                                 <button

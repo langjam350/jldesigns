@@ -7,9 +7,12 @@ export interface IPostService {
     getAllPosts(): Promise<IPost[]>;
     getPostById(postId: string): Promise<IPost | null>;
     addVideoToPost(postId: string, videoId: string): Promise<{ success: boolean; message: string; error?: string }>;
-    approvePost(postId: string): Promise<{ success: boolean; message: string; error?: string }>;
+    approvePost(post: IPost): Promise<{ success: boolean; message: string; error?: string }>;
     addTopicToQueue(topic: string): Promise<boolean>;
     getAllPostsWithMetadata(): Promise<IPostWithMetadata[]>;
+    getCategories(): Promise<string[]>;
+    generatePosts(topic: string, numPosts: number, category: string): Promise<IPost[]>;
+    deleteExperimentalPost(postId: string): Promise<boolean>;
 }
 
 const BASE_URL = process.env.NEXT_PUBLIC_APP_ENV === 'development' 
@@ -160,12 +163,12 @@ export default class PostService implements IPostService {
         }
     }
 
-    public async approvePost(postId: string): Promise<{ success: boolean; message: string; error?: string }> {
+    public async approvePost(post: IPost): Promise<{ success: boolean; message: string; error?: string }> {
         try {
             const response = await fetch(`${BASE_URL}/api/posts/approveVideoWithPostId`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ postId }),
+                body: JSON.stringify({ postId: post.postId }),
             });
             
             const data = await response.json();
@@ -234,6 +237,60 @@ export default class PostService implements IPostService {
         } catch (error) {
             console.error('Error in getAllPostsWithMetadata:', error);
             return [];
+        }
+    }
+
+    public async getCategories(): Promise<string[]> {
+        // Return default categories for social media posts
+        return [
+            'Technology',
+            'Business',
+            'Marketing',
+            'Social Media',
+            'Design',
+            'Lifestyle',
+            'Entertainment',
+            'News',
+            'Education',
+            'Travel'
+        ];
+    }
+
+    public async generatePosts(topic: string, numPosts: number, category: string): Promise<IPost[]> {
+        try {
+            // For now, return mock data since we don't have the generation endpoint implemented
+            const mockPosts: IPost[] = [];
+            for (let i = 0; i < numPosts; i++) {
+                mockPosts.push({
+                    id: `post_${Date.now()}_${i}`,
+                    postId: `${Date.now()}_${i}`,
+                    createdAt: new Date(),
+                    updatedAt: new Date(),
+                    URL: `${BASE_URL}/posts/${topic.toLowerCase().replace(/\s+/g, '-')}-${i}`,
+                    content: `Generated content for ${topic} in ${category} category`,
+                    title: `${topic} - Post ${i + 1}`,
+                    excerpt: `This is a generated post about ${topic}`,
+                    slug: `${topic.toLowerCase().replace(/\s+/g, '-')}-${i}`,
+                    tags: [category, topic],
+                    videos: [],
+                    isPublic: false
+                });
+            }
+            return mockPosts;
+        } catch (error) {
+            console.error('Error generating posts:', error);
+            return [];
+        }
+    }
+
+    public async deleteExperimentalPost(postId: string): Promise<boolean> {
+        try {
+            // For now, just return true since we don't have delete endpoint
+            console.log(`Would delete post with ID: ${postId}`);
+            return true;
+        } catch (error) {
+            console.error('Error deleting post:', error);
+            return false;
         }
     }
 }
