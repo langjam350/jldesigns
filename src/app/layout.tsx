@@ -4,6 +4,7 @@ import './globals.css'
 import Script from 'next/script'
 
 import Navigation from "../components/Navigation/Navbar"
+import { AuthProvider } from "../context/AuthContext"
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -37,8 +38,10 @@ export default function RootLayout({
       <title>JLang Designs for 2024</title>
       </head>
       <body className={inter.className}>
-        <Navigation />
-        {children}
+        <AuthProvider>
+          <Navigation />
+          {children}
+        </AuthProvider>
       </body>
     </html>
   )

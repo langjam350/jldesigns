@@ -10,8 +10,9 @@ const Navbar = () => {
         <div className="flex justify-between items-center h-full">
           <Logo />
           <ul className="nav-list h-full w-auto">
-            <li>
-              <Link href="/smm">
+            <li className="nav-item">
+              <Link href="/smm" legacyBehavior>
+                <p>SMM</p>
               </Link>
             </li>
             <li className="nav-item">
