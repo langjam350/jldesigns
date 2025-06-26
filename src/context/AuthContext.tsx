@@ -31,6 +31,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   // In your AuthContext.tsx, add this logging
   useEffect(() => {
+    if (typeof window === 'undefined') return; // Skip on server-side
+    
     console.log('🔄 AuthProvider useEffect - setting up auth listener');
     
     const unsubscribe = authService.onAuthStateChanged(async (authUser) => {
@@ -62,7 +64,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
     return () => {
       console.log('🧹 AuthProvider cleanup');
-      unsubscribe();
+      if (unsubscribe) unsubscribe();
     };
   }, [authService, isInitialized]);
   
