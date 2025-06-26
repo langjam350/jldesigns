@@ -3,8 +3,10 @@ import { Inter } from 'next/font/google'
 import './globals.css'
 import Script from 'next/script'
 
-import Navigation from "../components/Navigation/Navbar"
 import ClientWrapper from "../components/ClientWrapper"
+import dynamic from 'next/dynamic'
+
+const Navigation = dynamic(() => import('../components/Navigation/Navbar'), { ssr: false })
 
 const inter = Inter({ subsets: ['latin'] })
 

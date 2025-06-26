@@ -241,8 +241,7 @@ const PostGenerator = () => {
 };
 
 /**
- * Server-side props function
- * Currently not used for data fetching, but can be expanded if needed
+ * Server-side props function - Disable SSR due to AuthContext dependencies
  */
 export async function getServerSideProps() {
     return {
