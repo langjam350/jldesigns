@@ -12,7 +12,8 @@
       "Bash(grep:*)",
       "Bash(npx tsc:*)",
       "Bash(node:*)",
-      "Bash(timeout 30s npm run build:*)"
+      "Bash(timeout 30s npm run build:*)",
+      "Bash(timeout 60s npm run build:*)"
     ],
     "deny": []
   }

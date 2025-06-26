@@ -3,10 +3,10 @@ import { Inter } from 'next/font/google'
 import './globals.css'
 import Script from 'next/script'
 
-import ClientWrapper from "../components/ClientWrapper"
-import dynamic from 'next/dynamic'
-
-const Navigation = dynamic(() => import('../components/Navigation/Navbar'), { ssr: false })
+// Remove Navigation from layout to avoid build issues
+// import ClientWrapper from "../components/ClientWrapper"
+// import dynamic from 'next/dynamic'
+// const Navigation = dynamic(() => import('../components/Navigation/Navbar'), { ssr: false })
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -40,10 +40,7 @@ export default function RootLayout({
       <title>JLang Designs for 2024</title>
       </head>
       <body className={inter.className}>
-        <ClientWrapper>
-          <Navigation />
-          {children}
-        </ClientWrapper>
+        {children}
       </body>
     </html>
   )
