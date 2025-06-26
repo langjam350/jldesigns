@@ -2,13 +2,12 @@ import { useState, useEffect } from "react";
 import IPost from "../../models/IPost";
 import { IPostWithMetadata } from "../../models/IPost";
 import PostDAL from "../../dal/PostDAL";
-import VideoService from "../../services/VideoService";
-import VideoDAL from "../../dal/VideoDAL";
+import ServiceProvider from "../../services/ServiceProvider";
 
 // Initialize services
 const postDAL = new PostDAL();
-const videoDAL = new VideoDAL();
-const videoService = new VideoService(videoDAL);
+const serviceProvider = ServiceProvider.getInstance();
+const videoService = serviceProvider.getVideoService();
 
 const LANGUAGE_OPTIONS = [
   { code: 'en-US', name: 'English (US)', flag: '🇺🇸' },

@@ -5,6 +5,7 @@ import { IAuthService } from './AuthService';
 
 export interface ILoginService {
     setEmail(email: string): void;
+    setPassword(password: string): void;
     setIsAuthenticated(isAuthenticated: boolean): void;
     handleSignIn(email: string, password: string): Promise<void>;
     isAdmin(email: string): Promise<boolean>;
@@ -16,17 +17,23 @@ export interface ILoginService {
 
 export default class LoginService implements ILoginService {
     private email: string;
+    private password: string;
     private isAuthenticatedValue: boolean;
     private authService: IAuthService;
 
     constructor(authService: IAuthService) {
         this.email = '';
+        this.password = '';
         this.isAuthenticatedValue = false;
         this.authService = authService;
     }
     
     setEmail(email: string) {
         this.email = email;
+    }
+
+    setPassword(password: string) {
+        this.password = password;
     }
 
     setIsAuthenticated(isAuthenticated: boolean) {
