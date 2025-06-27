@@ -50,8 +50,7 @@ jobs:
           docker build \
           --build-arg NEXT_PUBLIC_APP_ENV=development \
           $(grep -v '^#' .env.development | sed 's/^/--build-arg /') \
-          t gcr.io/${{ secrets.GCP_PROJECT_ID_DEV }}/jldesigns-app-dev:dev \
-          .
+          -t gcr.io/${{ secrets.GCP_PROJECT_ID_DEV }}/nextjs-app-dev:dev .
 
       - name: Configure Docker to use GCloud credentials
         run: |
