@@ -45,11 +45,25 @@ jobs:
           project_id: ${{ secrets.GCP_PROJECT_ID_DEV }}
           service_account_key: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_JLDESIGNS_DEV }}
 
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+        with:
+          driver: docker
+
       - name: Build Docker image
         run: |
+          # Build environment arguments from .env file
+          BUILD_ARGS=""
+          while IFS= read -r line; do
+            if [[ ! -z "$line" && ! "$line" =~ ^#.* ]]; then
+              BUILD_ARGS="$BUILD_ARGS --build-arg $line"
+            fi
+          done < .env.development
+          
+          # Build the Docker image
           docker build \
             --build-arg NEXT_PUBLIC_APP_ENV=development \
-            $(grep -v '^#' .env.development | sed 's/^/--build-arg /') \
+            $BUILD_ARGS \
             -t gcr.io/${{ secrets.GCP_PROJECT_ID_DEV }}/jldesigns-app-dev:dev \
             .
 
