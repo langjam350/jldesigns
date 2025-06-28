@@ -22,7 +22,7 @@ class VideoService {
         return { success: false, error: response.statusText };
       }
 
-      const data = await response.json();
+      const data = await response.json() as { videoId: string };
       return { success: true, videoId: data.videoId };
     } catch (error: any) {
       return { success: false, error: error.message };
@@ -45,7 +45,7 @@ class VideoService {
         return { success: false, error: response.statusText };
       }
 
-      const data = await response.json();
+      const data = await response.json() as { audioUrl: string; duration: number };
       return { 
         success: true, 
         audioUrl: data.audioUrl, 
@@ -78,7 +78,7 @@ class VideoService {
         return { success: false, error: response.statusText };
       }
 
-      const data = await response.json();
+      const data = await response.json() as { taskId: string };
       return { success: true, taskId: data.taskId };
     } catch (error: any) {
       return { success: false, error: error.message };
@@ -87,14 +87,14 @@ class VideoService {
 }
 
 // Mock fetch
-const mockFetch = jest.fn();
-global.fetch = mockFetch as any;
+const mockFetch = jest.fn() as jest.MockedFunction<typeof fetch>;
 
 describe('VideoService', () => {
   let videoService: VideoService;
 
   beforeEach(() => {
     videoService = new VideoService();
+    global.fetch = mockFetch;
     jest.clearAllMocks();
   });
 
@@ -104,7 +104,7 @@ describe('VideoService', () => {
       const mockResponse = {
         ok: true,
         json: jest.fn().mockResolvedValue({ videoId: 'video-123', status: 'pending' })
-      };
+      } as any;
       mockFetch.mockResolvedValue(mockResponse);
 
       // Act
@@ -143,7 +143,7 @@ describe('VideoService', () => {
       const mockResponse = {
         ok: false,
         statusText: 'Internal Server Error'
-      };
+      } as any;
       mockFetch.mockResolvedValue(mockResponse);
 
       // Act
@@ -164,7 +164,7 @@ describe('VideoService', () => {
           audioUrl: 'https://example.com/audio.mp3', 
           duration: 15.5 
         })
-      };
+      } as any;
       mockFetch.mockResolvedValue(mockResponse);
 
       // Act
@@ -195,14 +195,14 @@ describe('VideoService', () => {
       const mockResponse = {
         ok: true,
         json: jest.fn().mockResolvedValue({ audioUrl: 'test.mp3', duration: 10 })
-      };
+      } as any;
       mockFetch.mockResolvedValue(mockResponse);
 
       // Act
       await videoService.generateTextToSpeech('Hello world');
 
       // Assert
-      const callBody = JSON.parse(mockFetch.mock.calls[0][1].body);
+      const callBody = JSON.parse((mockFetch.mock.calls[0][1] as any).body);
       expect(callBody.language).toBe('en');
     });
   });
@@ -221,7 +221,7 @@ describe('VideoService', () => {
       const mockResponse = {
         ok: true,
         json: jest.fn().mockResolvedValue({ taskId: 'task-456', status: 'processing' })
-      };
+      } as any;
       mockFetch.mockResolvedValue(mockResponse);
 
       // Act

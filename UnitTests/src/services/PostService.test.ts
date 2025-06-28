@@ -1,16 +1,17 @@
 import { jest, describe, beforeEach, it, expect } from '@jest/globals';
 import PostService from './PostService';
 import IPost from '../models/IPost';
+import { createMockResponse } from '../test-helpers';
 
 // Mock fetch
-const mockFetch = jest.fn();
-global.fetch = mockFetch as any;
+const mockFetch = jest.fn() as jest.MockedFunction<typeof fetch>;
 
 describe('PostService', () => {
   let postService: PostService;
 
   beforeEach(() => {
     postService = new PostService();
+    global.fetch = mockFetch;
     jest.clearAllMocks();
   });
 
@@ -24,10 +25,7 @@ describe('PostService', () => {
         slug: 'test-post'
       };
 
-      const mockResponse = {
-        ok: true,
-        json: jest.fn().mockResolvedValue({ success: true })
-      };
+      const mockResponse = createMockResponse({ success: true });
       mockFetch.mockResolvedValue(mockResponse);
 
       // Act
@@ -49,10 +47,7 @@ describe('PostService', () => {
         title: 'Test Post'
       };
 
-      const mockResponse = {
-        ok: false,
-        statusText: 'Internal Server Error'
-      };
+      const mockResponse = createMockResponse({}, false, 'Internal Server Error');
       mockFetch.mockResolvedValue(mockResponse);
 
       // Act
@@ -85,17 +80,14 @@ describe('PostService', () => {
         title: 'Test Post'
       };
 
-      const mockResponse = {
-        ok: true,
-        json: jest.fn().mockResolvedValue({ success: true })
-      };
+      const mockResponse = createMockResponse({ success: true });
       mockFetch.mockResolvedValue(mockResponse);
 
       // Act
       await postService.addPost(mockPost);
 
       // Assert
-      const callBody = JSON.parse(mockFetch.mock.calls[0][1].body);
+      const callBody = JSON.parse((mockFetch.mock.calls[0][1] as any).body);
       expect(callBody).toMatchObject({
         postId: 'test-post-1',
         title: 'Test Post',
@@ -131,10 +123,7 @@ describe('PostService', () => {
         }
       ];
 
-      const mockResponse = {
-        ok: true,
-        json: jest.fn().mockResolvedValue({ posts: mockPosts })
-      };
+      const mockResponse = createMockResponse({ posts: mockPosts });
       mockFetch.mockResolvedValue(mockResponse);
 
       // Act
@@ -147,10 +136,7 @@ describe('PostService', () => {
 
     it('should return empty array when API call fails', async () => {
       // Arrange
-      const mockResponse = {
-        ok: false,
-        statusText: 'Not Found'
-      };
+      const mockResponse = createMockResponse({}, false, 'Not Found');
       mockFetch.mockResolvedValue(mockResponse);
 
       // Act
@@ -192,10 +178,7 @@ describe('PostService', () => {
     it('should return null when post not found', async () => {
       // Arrange
       const postId = 'non-existent-post';
-      const mockResponse = {
-        ok: false,
-        statusText: 'Not Found'
-      };
+      const mockResponse = createMockResponse({}, false, 'Not Found');
       mockFetch.mockResolvedValue(mockResponse);
 
       // Act
@@ -237,10 +220,7 @@ describe('PostService', () => {
       // Arrange
       const postId = 'test-post-1';
       const videoId = 'test-video-1';
-      const mockResponse = {
-        ok: false,
-        statusText: 'Internal Server Error'
-      };
+      const mockResponse = createMockResponse({}, false, 'Internal Server Error');
       mockFetch.mockResolvedValue(mockResponse);
 
       // Act

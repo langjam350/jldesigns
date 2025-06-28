@@ -84,14 +84,14 @@ export default class PostService implements IPostService {
                 return [];
             }
             
-            const data = await response.json();
+            const data = await response.json() as { posts?: IPost[] };
             
             if (!data || !data.posts) {
                 console.error('No posts found in response');
                 return [];
             }
             
-            return data.posts as IPost[];
+            return data.posts;
         } catch (error) {
             console.error('Error in getAllPosts:', error);
             return [];
@@ -108,14 +108,14 @@ export default class PostService implements IPostService {
                 return null;
             }
             
-            const data = await response.json();
+            const data = await response.json() as { post?: IPost };
             
             if (!data || !data.post) {
                 console.log(`No post found with ID: ${postId}`);
                 return null;
             }
             
-            return data.post as IPost;
+            return data.post;
         } catch (error) {
             console.error('Error in getPostById:', error);
             return null;
@@ -134,7 +134,7 @@ export default class PostService implements IPostService {
                 }),
             });
             
-            const data = await response.json();
+            const data = await response.json() as { message?: string; error?: string };
             
             if (!response.ok) {
                 console.error(`Failed to add video to post: ${response.status} ${response.statusText}`);
@@ -167,7 +167,7 @@ export default class PostService implements IPostService {
                 body: JSON.stringify({ postId: post.postId }),
             });
             
-            const data = await response.json();
+            const data = await response.json() as { message?: string; error?: string };
             
             if (!response.ok) {
                 console.error(`Failed to approve post: ${response.status} ${response.statusText}`);

@@ -2,7 +2,7 @@
 import { jest } from '@jest/globals';
 
 // Mock fetch globally for unit tests
-global.fetch = jest.fn();
+global.fetch = jest.fn() as jest.MockedFunction<typeof fetch>;
 
 // Mock process.env for testing
 process.env.NEXT_PUBLIC_APP_ENV = 'development';
