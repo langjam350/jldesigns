@@ -39,11 +39,19 @@ jobs:
           NODE_ENV: production
           NEXT_PUBLIC_APP_ENV: development
 
+      - name: Authenticate to Google Cloud
+        uses: 'google-github-actions/auth@v2'
+        with:
+          credentials_json: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_JLDESIGNS_DEV }}'
+
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v2
         with:
           project_id: ${{ secrets.GCP_PROJECT_ID_DEV }}
-          service_account_key: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_JLDESIGNS_DEV }}
+
+      - name: Configure Docker to use GCloud credentials
+        run: |
+          gcloud auth configure-docker gcr.io
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -74,10 +82,6 @@ jobs:
             $BUILD_ARGS \
             -t gcr.io/${{ secrets.GCP_PROJECT_ID_DEV }}/jldesigns-app-dev:dev \
             .
-
-      - name: Configure Docker to use GCloud credentials
-        run: |
-          gcloud auth configure-docker gcr.io
 
       - name: Push Docker image to Container Registry
         run: |
@@ -112,20 +116,11 @@ jobs:
       - name: Install Firebase CLI
         run: npm install -g firebase-tools
 
-      - name: Authenticate to Google Cloud
-        uses: 'google-github-actions/auth@v2'
-        id: auth
-        with:
-          credentials_json: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_JLDESIGNS_DEV }}'
-          create_credentials_file: true
-          export_environment_variables: true
-
       - name: Set Firebase Configurations
         run: |
           firebase use ${{ secrets.FIREBASE_PROJECT_ID_DEV }}
           firebase functions:config:set artifactregistry.enabled=false
         env:
-          GOOGLE_APPLICATION_CREDENTIALS: ${{ steps.auth.outputs.credentials_file_path }}
           DOTENV_CONFIG_PATH: .env.development
 
       - name: Deploy to Firebase Hosting
@@ -133,5 +128,4 @@ jobs:
           firebase use ${{ secrets.FIREBASE_PROJECT_ID_DEV }}
           firebase deploy --only hosting:development --debug
         env:
-          GOOGLE_APPLICATION_CREDENTIALS: ${{ steps.auth.outputs.credentials_file_path }}
           DOTENV_CONFIG_PATH: .env.development
