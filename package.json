@@ -18,7 +18,14 @@
     "docker:dev": "docker-compose up --build",
     "load-env:dev": "./load-dev.sh",
     "deploy:dev": "firebase use dev && firebase deploy --only hosting:development",
-    "deploy:prod": "firebase use production && firebase deploy --only hosting:production"
+    "deploy:prod": "firebase use production && firebase deploy --only hosting:production",
+    "test:unit": "cd UnitTests && npm test",
+    "test:unit:watch": "cd UnitTests && npm run test:watch",
+    "test:unit:coverage": "cd UnitTests && npm run test:coverage",
+    "test:api": "cd WebServiceTests && npm test",
+    "test:api:dev": "cd WebServiceTests && npm run test:dev",
+    "test:all": "npm run test:unit && npm run test:api",
+    "setup:tests": "cd UnitTests && npm install && cd ../WebServiceTests && npm install"
   },
   "dependencies": {
     "@google-cloud/text-to-speech": "^5.8.0",

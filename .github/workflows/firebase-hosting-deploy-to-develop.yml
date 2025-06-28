@@ -121,7 +121,6 @@ jobs:
       - name: Set Firebase Configurations
         run: |
           firebase use ${{ secrets.FIREBASE_PROJECT_ID_DEV }}
-          firebase functions:config:set artifactregistry.enabled=false
         env:
           DOTENV_CONFIG_PATH: .env.development
 

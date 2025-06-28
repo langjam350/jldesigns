@@ -14,7 +14,8 @@
       "Bash(node:*)",
       "Bash(timeout 30s npm run build:*)",
       "Bash(timeout 60s npm run build:*)",
-      "Bash(ls:*)"
+      "Bash(ls:*)",
+      "Bash(npm install:*)"
     ],
     "deny": []
   }
