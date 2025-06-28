@@ -52,13 +52,21 @@ jobs:
 
       - name: Build Docker image
         run: |
+          # Validate required secrets
+          if [[ -z "${{ secrets.GCP_PROJECT_ID_DEV }}" ]]; then
+            echo "Error: GCP_PROJECT_ID_DEV secret is not set"
+            exit 1
+          fi
+          
           # Build environment arguments from .env file
           BUILD_ARGS=""
-          while IFS= read -r line; do
-            if [[ ! -z "$line" && ! "$line" =~ ^#.* ]]; then
-              BUILD_ARGS="$BUILD_ARGS --build-arg $line"
-            fi
-          done < .env.development
+          if [ -f .env.development ]; then
+            while IFS= read -r line; do
+              if [[ ! -z "$line" && ! "$line" =~ ^#.* ]]; then
+                BUILD_ARGS="$BUILD_ARGS --build-arg $line"
+              fi
+            done < .env.development
+          fi
           
           # Build the Docker image
           docker build \
@@ -77,6 +85,16 @@ jobs:
 
       - name: Deploy to Cloud Run
         run: |
+          # Build environment variables from .env file
+          ENV_VARS="HOST=dev.jldesigns.com"
+          if [ -f .env.development ]; then
+            while IFS= read -r line; do
+              if [[ ! -z "$line" && ! "$line" =~ ^#.* ]]; then
+                ENV_VARS="$ENV_VARS,$line"
+              fi
+            done < .env.development
+          fi
+          
           gcloud run deploy jldesigns-app-dev \
             --image gcr.io/${{ secrets.GCP_PROJECT_ID_DEV }}/jldesigns-app-dev:dev \
             --platform managed \
@@ -89,8 +107,7 @@ jobs:
             --max-instances 2 \
             --concurrency 80 \
             --timeout 300s \
-            --set-env-vars=HOST=dev.jldesigns.com \
-            $(grep -v '^#' .env.development | sed 's/^/--set-env-vars=/')
+            --set-env-vars="$ENV_VARS"
 
       - name: Install Firebase CLI
         run: npm install -g firebase-tools
