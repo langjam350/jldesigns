@@ -5,7 +5,7 @@ export const createMockResponse = (data: any, ok: boolean = true, statusText: st
   return {
     ok,
     statusText,
-    json: jest.fn().mockResolvedValue(data),
+    json: jest.fn().mockResolvedValue(data) as any,
     headers: new Headers(),
     status: ok ? 200 : 400,
     statusText,
