@@ -106,7 +106,6 @@ jobs:
             --platform managed \
             --region us-central1 \
             --allow-unauthenticated \
-            --port 4000 \
             --memory 8Gi \
             --cpu 4 \
             --min-instances 1 \
