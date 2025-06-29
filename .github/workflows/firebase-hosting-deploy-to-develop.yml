@@ -120,6 +120,7 @@ jobs:
       - name: Set Firebase Configurations
         run: |
           firebase use ${{ secrets.FIREBASE_PROJECT_ID_DEV }}
+          firebase target:apply hosting development ${{ secrets.FIREBASE_PROJECT_ID_DEV }}
         env:
           DOTENV_CONFIG_PATH: .env.development
 
