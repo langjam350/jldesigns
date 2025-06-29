@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import dynamic from 'next/dynamic';
 import ServiceProvider from '@/services/ServiceProvider';
 import '../../app/globals.css';
 import { useAuth } from '@/context/AuthContext';
@@ -243,4 +244,8 @@ const PostGenerator = () => {
 /**
  * Server-side props function - Disable SSR due to AuthContext dependencies
  */
-export default PostGenerator;
+// Export as client-side only component to avoid SSR issues with AuthContext
+export default dynamic(() => Promise.resolve(PostGenerator), {
+    ssr: false,
+    loading: () => <div>Loading...</div>
+});

@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import dynamic from "next/dynamic";
 import Navigation from "../../components/Navigation";
 import "../../app/globals.css";
 
@@ -45,5 +46,8 @@ const Websites = () => {
   );
 };
 
-// Disable SSR for this page due to AuthContext dependencies
-export default Websites;
+// Disable SSR for this page due to AuthContext dependencies in Navigation
+export default dynamic(() => Promise.resolve(Websites), {
+  ssr: false,
+  loading: () => <div>Loading...</div>
+});
