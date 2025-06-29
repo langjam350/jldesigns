@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import '../../app/globals.css'
 import LoginService from '../../services/LoginService'
+import ServiceProvider from '../../services/ServiceProvider'
 import { useRouter } from 'next/router';
 
 const SignInPage = () => {
@@ -13,7 +14,8 @@ const SignInPage = () => {
         password: ''
       });
 
-    const loginService = new LoginService(); // Instantiate the LoginService
+    const authService = ServiceProvider.getInstance().getAuthService();
+    const loginService = new LoginService(authService); // Instantiate the LoginService
     const router = useRouter();
 
 

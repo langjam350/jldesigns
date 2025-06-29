@@ -11,7 +11,16 @@
       "Bash(npm run:*)",
       "Bash(grep:*)",
       "Bash(npx tsc:*)",
-      "Bash(node:*)"
+      "Bash(node:*)",
+      "Bash(timeout 30s npm run build:*)",
+      "Bash(timeout 60s npm run build:*)",
+      "Bash(ls:*)",
+      "Bash(npm install:*)",
+      "Bash(npm test)",
+      "Bash(npm test:*)",
+      "Bash(git add:*)",
+      "Bash(npm cache clean:*)",
+      "Bash(npm update:*)"
     ],
     "deny": []
   }

@@ -27,8 +27,8 @@ ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
 # Copy package.json and package-lock.json
 COPY package*.json ./
 
-# Install dependencies
-RUN npm ci --omit=dev  # Omitting dev dependencies for production
+# Install all dependencies (including dev dependencies for build)
+RUN npm ci
 
 # Copy the rest of your app's source code
 COPY . .
@@ -49,9 +49,10 @@ EXPOSE 4000 8080
 RUN if [ "$APP_ENV" = "production" ]; then \
         echo "Setting up production environment" && \
         npm run build && \
-        npm ci --only=production; \
+        npm prune --production; \
     else \
-        echo "Setting up development environment"; \
+        echo "Setting up development environment" && \
+        npm run build; \
     fi
 
 # Set the startup command

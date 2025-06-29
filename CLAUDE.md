@@ -27,9 +27,16 @@
 ## Database Details
 
 ## Development Guidelines
-- Run linting with: `npm run lint`. Run linting before testing, 
-- Run type checking with: `npm run typecheck`
-- Test with: `npm test`. Test after completing major features.
+- Run linting with: `npm run lint`
+- Run type checking with: `npx tsc --noEmit`
+- Set up tests: `npm run setup:tests` (installs dependencies for both test projects)
+- Run unit tests: `npm run test:unit` (tests service methods in isolation)
+- Run API integration tests: `npm run test:api` (tests against DEV environment)
+- Run all tests: `npm run test:all`
+
+## Testing Structure
+- **UnitTests/**: Unit tests for service methods with mocked dependencies
+- **WebServiceTests/**: Integration tests that connect to the DEV environment to test actual API endpoints
 
 ## Project Structure
 - `/src/dal` - Data access layer for Firebase interactions

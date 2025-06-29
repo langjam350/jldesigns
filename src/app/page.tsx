@@ -1,4 +1,5 @@
 import './globals.css'
+import Link from 'next/link'
 
 export default function Home() {
   return (
@@ -16,8 +17,9 @@ export default function Home() {
           <li className="text-lg">Video Generation Pipeline: Automated video creation with text-to-speech, images, and synchronized captions.</li>
           <li className="text-lg">Content Management: Organize and manage your posts with integrated metadata and video linking.</li>
         </ul>
-        <p className="text-lg">Resume:</p>
-        <iframe src="./JL_Resume.pdf" className="max-w-4xl" width="100%" height="500px"></iframe>
+        <p className="text-lg">
+          <Link href="/signin" className="text-blue-600 hover:text-blue-800 underline">Sign In</Link> to access the full platform features.
+        </p>
       </div>
     </main>
   )

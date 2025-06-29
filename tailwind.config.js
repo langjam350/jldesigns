@@ -1,23 +1,21 @@
 /** @type {import('tailwindcss').Config} */
-
 module.exports = {
-  purge: [
-    // Adjust the paths to match your project structure
-    './src/**/*.tsx',
+  content: [
+    // Updated from 'purge' to 'content'
+    './src/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/components/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/app/**/*.{js,ts,jsx,tsx,mdx}', // If using app directory
   ],
-  darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
       colors: {
         primary: "#0B132B",
-        secondary: "#1C2541",
+        secondary: "#1C2541", 
         background: "#FFFFFF",
         accent: "#5BC0BE",
       }
     },
-  },
-  variants: {
-    extend: {},
   },
   plugins: [],
 }

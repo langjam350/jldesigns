@@ -18,7 +18,14 @@
     "docker:dev": "docker-compose up --build",
     "load-env:dev": "./load-dev.sh",
     "deploy:dev": "firebase use dev && firebase deploy --only hosting:development",
-    "deploy:prod": "firebase use production && firebase deploy --only hosting:production"
+    "deploy:prod": "firebase use production && firebase deploy --only hosting:production",
+    "test:unit": "cd UnitTests && npm test",
+    "test:unit:watch": "cd UnitTests && npm run test:watch",
+    "test:unit:coverage": "cd UnitTests && npm run test:coverage",
+    "test:api": "cd WebServiceTests && npm test",
+    "test:api:dev": "cd WebServiceTests && npm run test:dev",
+    "test:all": "npm run test:unit && npm run test:api",
+    "setup:tests": "cd UnitTests && npm install && cd ../WebServiceTests && npm install"
   },
   "dependencies": {
     "@google-cloud/text-to-speech": "^5.8.0",
@@ -46,14 +53,19 @@
     "@types/cookie": "^0.6.0",
     "@types/fluent-ffmpeg": "^2.1.27",
     "@types/formidable": "^3.4.5",
+    "@types/jest": "^30.0.0",
     "@types/node": "^20",
     "@types/pg": "^8.15.4",
     "@types/react": "^18",
-    "autoprefixer": "^10.4.17",
+    "autoprefixer": "^10.4.21",
     "eslint": "^8",
     "eslint-config-next": "14.0.4",
-    "postcss": "^8.4.33",
-    "tailwindcss": "^3.4.1",
+    "jest": "^30.0.3",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^3.4.0",
     "typescript": "^5"
+  },
+  "optionalDependencies": {
+    "fsevents": "^2.3.3"
   }
 }
