@@ -243,10 +243,4 @@ const PostGenerator = () => {
 /**
  * Server-side props function - Disable SSR due to AuthContext dependencies
  */
-export async function getServerSideProps() {
-    return {
-        props: {}
-    };
-}
-
 export default PostGenerator;

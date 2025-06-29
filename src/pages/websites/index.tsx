@@ -46,10 +46,4 @@ const Websites = () => {
 };
 
 // Disable SSR for this page due to AuthContext dependencies
-export async function getServerSideProps() {
-  return {
-    props: {}
-  };
-}
-
 export default Websites;
