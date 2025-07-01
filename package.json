@@ -33,6 +33,7 @@
     "axios": "^1.7.2",
     "bcryptjs": "^2.4.3",
     "cookie": "^0.6.0",
+    "cors": "^2.8.5",
     "ffmpeg-static": "^5.2.0",
     "firebase": "^10.8.0",
     "fluent-ffmpeg": "^2.1.3",
