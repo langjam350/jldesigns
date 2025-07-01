@@ -20,7 +20,10 @@
       "Bash(npm test:*)",
       "Bash(git add:*)",
       "Bash(npm cache clean:*)",
-      "Bash(npm update:*)"
+      "Bash(npm update:*)",
+      "Bash(firebase use:*)",
+      "Bash(firebase projects:list:*)",
+      "Bash(npx next:*)"
     ],
     "deny": []
   }

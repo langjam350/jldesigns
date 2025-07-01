@@ -3,10 +3,7 @@ import { Inter } from 'next/font/google'
 import './globals.css'
 import Script from 'next/script'
 
-// Remove Navigation from layout to avoid build issues
-// import ClientWrapper from "../components/ClientWrapper"
-// import dynamic from 'next/dynamic'
-// const Navigation = dynamic(() => import('../components/Navigation/Navbar'), { ssr: false })
+import LayoutWrapper from "../components/LayoutWrapper"
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -40,7 +37,9 @@ export default function RootLayout({
       <title>JLang Designs for 2024</title>
       </head>
       <body className={inter.className}>
-        {children}
+        <LayoutWrapper>
+          {children}
+        </LayoutWrapper>
       </body>
     </html>
   )
