@@ -3,8 +3,8 @@ import axios from 'axios';
 import ITask from '../models/ITask';
 
 const BASE_URL = process.env.NEXT_PUBLIC_APP_ENV === 'development' 
-  ? 'https://dev.wellnessworldwideweb.com' 
-  : 'https://www.wellnessworldwideweb.com';
+  ? 'https://dev.jldesigns.com' 
+  : 'https://www.jldesigns.com';
 
 export interface ITaskDAL {
   createTask(taskType: string, config: any): Promise<ITask>;

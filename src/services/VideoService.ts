@@ -24,8 +24,8 @@ import { stripToContent } from '@/utils/stripToContent';
 
 
 const BASE_URL = process.env.NEXT_PUBLIC_APP_ENV === 'development' 
-    ? 'https://dev.wellnessworldwideweb.com' 
-    : 'https://www.wellnessworldwideweb.com';
+    ? 'https://dev.jldesigns.com' 
+    : 'https://www.jldesigns.com';
 
 // Define a consistent response type for video operations
 export interface VideoServiceResponse {

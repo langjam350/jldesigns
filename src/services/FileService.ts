@@ -14,8 +14,8 @@ export default class FileService implements IFileService {
   constructor() {
     this.BASE_URL =
       process.env.NEXT_PUBLIC_APP_ENV === 'development'
-        ? 'https://dev.wellnessworldwideweb.com'
-        : 'https://www.wellnessworldwideweb.com';
+        ? 'https://dev.jldesigns.com'
+        : 'https://www.jldesigns.com';
   }
 
   public async getCategories(): Promise<string[]> {
