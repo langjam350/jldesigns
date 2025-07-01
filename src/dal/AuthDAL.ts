@@ -3,8 +3,8 @@ import axios from 'axios';
 import IUserInfo from '../models/IUserInfo';
 
 const BASE_URL = process.env.NEXT_PUBLIC_APP_ENV === 'development' 
-  ? 'https://dev.wellnessworldwideweb.com' 
-  : 'https://www.wellnessworldwideweb.com';
+  ? 'https://dev.jldesigns.com' 
+  : 'https://www.jldesigns.com';
 
 export interface IAuthDAL {
   createUser(email: string, password: string, displayName: string): Promise<{ userId: string; email: string }>;

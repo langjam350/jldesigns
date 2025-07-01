@@ -20,8 +20,8 @@ export default class EmailService implements IEmailService {
   
   constructor() {
     const baseUrl = process.env.NEXT_PUBLIC_APP_ENV === 'development' 
-      ? 'https://dev.wellnessworldwideweb.com' 
-      : 'https://www.wellnessworldwideweb.com';
+      ? 'https://dev.jldesigns.com' 
+      : 'https://www.jldesigns.com';
     
     this.apiUrl = `${baseUrl}/api/email/sendEmail`;
   }
@@ -56,7 +56,7 @@ export default class EmailService implements IEmailService {
       <p>Direct link: <a href="${videoUrl}">${videoUrl}</a></p>
       <hr>
       <p style="color: #666; font-size: 0.8em;">
-        This is an automated message from Wellness World Wide Web video generation service.
+        This is an automated message from JL Designs Video Generation Service (TM).
       </p>
     `;
     
