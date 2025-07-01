@@ -108,7 +108,7 @@ jobs:
             --memory 8Gi \
             --cpu 4 \
             --min-instances 1 \
-            --max-instances 3 \
+            --max-instances 2 \
             --concurrency 80 \
             --timeout 300s \
             --set-env-vars="$ENV_VARS"
