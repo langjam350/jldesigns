@@ -11,7 +11,9 @@ const nextConfig = {
     typescript: {
         ignoreBuildErrors: true,
     },
-    serverExternalPackages: ['firebase', 'firebase-admin'],
+    experimental: {
+        serverExternalPackages: ['firebase', 'firebase-admin']
+    },
     webpack: (config, { isServer }) => {
         if (!isServer) {
             config.resolve.fallback = {
