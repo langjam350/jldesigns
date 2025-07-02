@@ -4,8 +4,8 @@ import axios from 'axios';
 import ITask, { TaskStatus, TaskConfig } from '../models/ITask';
 
 const BASE_URL = process.env.NEXT_PUBLIC_APP_ENV === 'development' 
-    ? 'https://dev.jldesigns.com' 
-    : 'https://www.jldesigns.com';
+    ? 'https://dev.jlangdesigns.com' 
+    : 'https://www.jlangdesigns.com';
 
 export interface ITaskService {
     createTask(type: string, config: TaskConfig): Promise<ITask>;

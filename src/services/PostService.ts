@@ -17,7 +17,7 @@ export interface IPostService {
 
 const BASE_URL = process.env.NEXT_PUBLIC_APP_ENV === 'development' 
     ? 'http://localhost:4000' 
-    : 'https://jldesigns.vercel.app';
+    : 'https://www.jlangdesigns.com';
 
 export default class PostService implements IPostService {
     public async addPost(post: Partial<IPost>): Promise<boolean> {

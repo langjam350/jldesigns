@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 // Base URL for DEV environment
-export const BASE_URL = process.env.TEST_BASE_URL || 'https://dev.jldesigns.com';
+export const BASE_URL = process.env.TEST_BASE_URL || 'https://dev.jlangdesigns.com';
 
 // Configure axios defaults
 axios.defaults.baseURL = BASE_URL;

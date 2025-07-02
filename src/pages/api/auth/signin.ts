@@ -8,9 +8,9 @@ const cors = Cors({
   allowedHeaders: ['Content-Type', 'Authorization'],
   origin: [
     'http://localhost:4000',
-    'https://www.jldesigns.com',
-    'https://dev.jldesigns.com',
-    'https://jldesigns.com'
+    'https://www.jlangdesigns.com',
+    'https://dev.jlangdesigns.com',
+    'https://jlangdesigns.com'
   ],
 });
 

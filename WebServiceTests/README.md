@@ -11,7 +11,7 @@ npm install
 
 2. Set environment variables:
 ```bash
-export TEST_BASE_URL="https://dev.jldesigns.com"
+export TEST_BASE_URL="https://dev.jlangdesigns.com"
 ```
 
 3. Run tests:
