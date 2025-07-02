@@ -8,7 +8,12 @@ import Cors from 'cors';
 // Initialize CORS middleware
 const cors = Cors({
   methods: ['POST', 'OPTIONS'],
-  origin: 'http://localhost:4000', // Adjust based on frontend URL
+  origin: [
+    'http://localhost:4000',
+    'https://www.jldesigns.com',
+    'https://dev.jldesigns.com',
+    'https://jldesigns.com'
+  ],
 });
 
 // Helper to run CORS
