@@ -6,7 +6,12 @@ import Cors from 'cors';
 const cors = Cors({
   methods: ['GET', 'POST', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
-  origin: 'http://localhost:4000', // Adjust this based on your frontend URL
+  origin: [
+    'http://localhost:4000',
+    'https://www.jldesigns.com',
+    'https://dev.jldesigns.com',
+    'https://jldesigns.com'
+  ],
 });
 
 const runCors = (req: NextApiRequest, res: NextApiResponse) =>
