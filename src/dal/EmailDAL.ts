@@ -2,8 +2,8 @@
 import axios from 'axios';
 
 const BASE_URL = process.env.NEXT_PUBLIC_APP_ENV === 'development' 
-  ? 'https://dev.jldesigns.com' 
-  : 'https://www.jldesigns.com';
+  ? 'https://dev.jlangdesigns.com' 
+  : 'https://www.jlangdesigns.com';
 
 export interface IEmailDAL {
   sendEmail(to: string, subject: string, text: string, html?: string): Promise<boolean>;

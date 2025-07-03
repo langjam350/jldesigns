@@ -3,8 +3,8 @@ import axios from 'axios';
 import IFile from '../models/IFile';
 
 const BASE_URL = process.env.NEXT_PUBLIC_APP_ENV === 'development' 
-  ? 'https://dev.jldesigns.com' 
-  : 'https://www.jldesigns.com';
+  ? 'https://dev.jlangdesigns.com' 
+  : 'https://www.jlangdesigns.com';
 
 export interface IFileDAL {
   uploadFile(file: { name: string, data: string }, options?: { type?: string, category?: string }): Promise<{ url: string, fileName: string }>;

@@ -1,4 +1,4 @@
-const BASE_URL = process.env.NEXT_PUBLIC_APP_ENV === 'development' ? 'https://dev.jldesigns.com' : 'https://www.jldesigns.com';
+const BASE_URL = process.env.NEXT_PUBLIC_APP_ENV === 'development' ? 'https://dev.jlangdesigns.com' : 'https://www.jlangdesigns.com';
 
 const MAX_RETRIES = 3;
 const RETRY_DELAY = 1000; // 1 second delay between retries

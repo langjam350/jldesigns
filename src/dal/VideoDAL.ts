@@ -4,7 +4,7 @@ import { IVideo }  from '../models/IVideo';
 
 const BASE_URL = process.env.NEXT_PUBLIC_APP_ENV === 'development' 
   ? 'http://localhost:4000' 
-  : 'https://jldesigns.vercel.app';
+  : 'https://www.jlangdesigns.com';
 
 export interface IVideoDAL {
   createVideo(videoData: Partial<IVideo>): Promise<string>;

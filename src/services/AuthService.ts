@@ -2,7 +2,7 @@
 import { auth } from '../../lib/firebase'; // Adjust the path as necessary
 import { onAuthStateChanged, User } from 'firebase/auth';
 
-const BASE_URL = process.env.NEXT_PUBLIC_APP_ENV === 'development' ? 'https://dev.jldesigns.com' : 'https://www.jldesigns.com';
+const BASE_URL = process.env.NEXT_PUBLIC_APP_ENV === 'development' ? 'https://dev.jlangdesigns.com' : 'https://www.jlangdesigns.com';
 
 export interface IAuthService {
   signIn(email: string, password: string): Promise<any>;

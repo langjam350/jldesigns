@@ -5,7 +5,7 @@ import { IPostWithMetadata } from '../models/IPost';
 
 const BASE_URL = process.env.NEXT_PUBLIC_APP_ENV === 'development' 
   ? 'http://localhost:4000' 
-  : 'https://jldesigns.vercel.app';
+  : 'https://www.jlangdesigns.com';
 
 export interface IPostDAL {
   addPost(post: Partial<IPost>): Promise<IPost>;

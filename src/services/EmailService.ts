@@ -20,8 +20,8 @@ export default class EmailService implements IEmailService {
   
   constructor() {
     const baseUrl = process.env.NEXT_PUBLIC_APP_ENV === 'development' 
-      ? 'https://dev.jldesigns.com' 
-      : 'https://www.jldesigns.com';
+      ? 'https://dev.jlangdesigns.com' 
+      : 'https://www.jlangdesigns.com';
     
     this.apiUrl = `${baseUrl}/api/email/sendEmail`;
   }
