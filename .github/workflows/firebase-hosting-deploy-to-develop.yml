@@ -91,7 +91,7 @@ jobs:
       - name: Deploy to Cloud Run
         run: |
           # Build environment variables from .env file
-          ENV_VARS="HOST=dev.jldesigns.com"
+          ENV_VARS="HOST=dev.jlangdesigns.com"
           if [ -f .env.development ]; then
             while IFS= read -r line; do
               if [[ ! -z "$line" && ! "$line" =~ ^#.* ]]; then
