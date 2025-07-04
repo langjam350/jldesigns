@@ -2,8 +2,10 @@ import React from "react";
 import Link from "next/link";
 import Logo from "./Logo";
 import Button from "./Button";
+import { useAuth } from "@/context/AuthContext";
 
 const Navbar = () => {
+  const { user, loading } = useAuth();
   return <>
     <div className="w-full h-20 bg-accent sticky top-0 navbar">
       <div className="container mx-auto px-4 h-full">
@@ -20,16 +22,20 @@ const Navbar = () => {
                 <p>Design</p>
               </Link>
             </li>
-            <li className="nav-item">
-              <Link href="/video-dashboard" legacyBehavior >
-                <p>Videos</p>
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link href="/generate-posts" legacyBehavior >
-                <p>Posts</p>
-              </Link>
-            </li>
+            {user && (
+              <>
+                <li className="nav-item">
+                  <Link href="/video-dashboard" legacyBehavior >
+                    <p>Videos</p>
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link href="/generate-posts" legacyBehavior >
+                    <p>Posts</p>
+                  </Link>
+                </li>
+              </>
+            )}
           </ul>
           <Button />
         </div>

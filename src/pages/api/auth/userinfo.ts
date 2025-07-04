@@ -45,21 +45,36 @@ export default async function handler(
   }
 
   try {
+    console.log('🔍 Fetching user info for email:', email);
+    console.log('🔥 Firebase config check - projectId:', process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID || 'jldesigns');
+    
     // Query Firestore for user info by email
     const userInfoRef = collection(db, 'userInfo');
+    console.log('📄 Querying Firestore collection: userInfo');
+    
     const querySnapshot = await getDocs(query(userInfoRef, where('email', '==', email)));
+    console.log('📊 Query result - empty:', querySnapshot.empty, 'size:', querySnapshot.size);
 
     if (!querySnapshot.empty) {
       // If user found, return user data
       const docSnapshot = querySnapshot.docs[0];
       const userData = docSnapshot.data() as IUserInfo;
+      console.log('✅ User found:', userData.email);
       res.status(200).json(userData);
     } else {
       // If no user found, return 404
+      console.log('❌ No user found for email:', email);
       res.status(404).json({ message: 'User not found' });
     }
   } catch (error) {
-    console.error('Error fetching user info:', error);
-    res.status(500).json({ message: 'Internal Server Error' });
+    console.error('❌ Error fetching user info:', error);
+    console.error('Error details:', {
+      message: error instanceof Error ? error.message : 'Unknown error',
+      stack: error instanceof Error ? error.stack : undefined
+    });
+    res.status(500).json({ 
+      message: 'Internal Server Error',
+      error: error instanceof Error ? error.message : 'Unknown error'
+    });
   }
 }
