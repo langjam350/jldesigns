@@ -1,5 +1,15 @@
 {
   "projects": {
     "default": "jldesigns"
-  }
+  },
+  "targets": {
+    "jldesigns": {
+      "hosting": {
+        "production": [
+          "jldesigns"
+        ]
+      }
+    }
+  },
+  "etags": {}
 }
