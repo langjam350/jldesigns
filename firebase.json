@@ -2,7 +2,7 @@
   "hosting": [
     {
       "target": "production",
-      "public": "out",
+      "public": ".next/static",
       "cleanUrls": true,
       "ignore": [
         "firebase.json",
@@ -60,8 +60,8 @@
       ]
     },
     {
-      "target": "development",
-      "public": "out",
+      "target": "development", 
+      "public": ".next/static",
       "cleanUrls": true,
       "ignore": [
         "firebase.json",
